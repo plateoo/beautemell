@@ -32,7 +32,7 @@ nav.scrolled{background:rgba(255,251,252,.96);backdrop-filter:blur(12px);box-sha
 .burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
 
 /* ═══ SECTIONS ═══ */
-section{padding:100px 60px;position:relative;z-index:3;}
+section{padding:100px 60px;position:relative;z-index:10;}
 .section-label{font-size:.7rem;letter-spacing:.25em;text-transform:uppercase;color:var(--rose);margin-bottom:12px;}
 h2{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(2rem,4vw,3rem);font-weight:300;color:var(--dark);line-height:1.2;margin-bottom:40px;}
 .rv{opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s ease;}
@@ -76,7 +76,7 @@ h2{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(2rem
 /* ═══ SERVICES ═══ */
 #services{background:rgba(255,251,252,.97);}
 .services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
-.service-card{background:#fff;border-radius:20px;padding:36px 28px;position:relative;overflow:hidden;cursor:default;transition:transform .3s,box-shadow .3s;border:1px solid rgba(249,200,212,.3);}
+.service-card{background:#fff;border-radius:20px;padding:36px 28px;position:relative;overflow:hidden;cursor:pointer;transition:transform .3s,box-shadow .3s;border:1px solid rgba(249,200,212,.3);}
 .service-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--rose),var(--gold));transform:scaleX(0);transform-origin:left;transition:transform .4s ease;}
 .service-card:hover::before{transform:scaleX(1);}
 .service-card:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(224,120,152,.12);}
@@ -88,7 +88,7 @@ h2{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(2rem
 .service-price{margin-top:20px;font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--rose);}
 
 /* ═══ TARIFS ═══ */
-#tarifs{background:#1a0808;padding:100px 60px;z-index:3;position:relative;}
+#tarifs{background:#1a0808;padding:100px 60px;z-index:10;position:relative;}
 #tarifs .section-label{color:var(--gold);}
 #tarifs h2{color:#fff;}
 .tarifs-intro{color:rgba(255,255,255,.55);font-size:.88rem;margin-bottom:40px;max-width:560px;line-height:1.7;}
@@ -201,7 +201,7 @@ h2{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(2rem
 .regle-text{font-size:.85rem;color:var(--muted);line-height:1.7;}
 
 /* ═══ FOOTER ═══ */
-footer{background:var(--dark);color:rgba(255,255,255,.7);padding:60px 60px 40px;position:relative;z-index:3;}
+footer{background:var(--dark);color:rgba(255,255,255,.7);padding:60px 60px 40px;position:relative;z-index:10;}
 .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:60px;margin-bottom:40px;}
 .footer-brand{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:2rem;color:var(--sakura);margin-bottom:16px;}
 .footer-desc{font-size:.85rem;line-height:1.8;opacity:.7;}
@@ -457,12 +457,12 @@ footer{background:var(--dark);color:rgba(255,255,255,.7);padding:60px 60px 40px;
   <p class="section-label rv">Ce que je propose</p>
   <h2 class="rv">Mes services</h2>
   <div class="services-grid">
-    <div class="service-card rv"><span class="service-sakura">🌸</span><div class="service-icon">💅</div><p class="service-name">Pose Gel</p><p class="service-desc">Pose gel longue durée, effet naturel ou glamour.</p><p class="service-price">À partir de 45€</p></div>
-    <div class="service-card rv rv-d1"><span class="service-sakura">🌸</span><div class="service-icon">✨</div><p class="service-name">Résine</p><p class="service-desc">Allonger et renforcer. Ultra-léger, ultra-naturel.</p><p class="service-price">À partir de 50€</p></div>
-    <div class="service-card rv rv-d2"><span class="service-sakura">🌸</span><div class="service-icon">🌟</div><p class="service-name">VSP</p><p class="service-desc">Couleur impeccable 3 semaines sans abîmer l'ongle.</p><p class="service-price">À partir de 30€</p></div>
-    <div class="service-card rv rv-d3"><span class="service-sakura">🌸</span><div class="service-icon">🎨</div><p class="service-name">Nail Art</p><p class="service-desc">Créations uniques — florales, géométriques, freestyle.</p><p class="service-price">Sur devis</p></div>
-    <div class="service-card rv rv-d4"><span class="service-sakura">🌸</span><div class="service-icon">🔄</div><p class="service-name">Remplissage</p><p class="service-desc">Entretien toutes les 3-4 semaines.</p><p class="service-price">À partir de 35€</p></div>
-    <div class="service-card rv rv-d4"><span class="service-sakura">🌸</span><div class="service-icon">🌿</div><p class="service-name">Dépose</p><p class="service-desc">Dépose douce, sécurisée, préserve l'ongle naturel.</p><p class="service-price">À partir de 15€</p></div>
+    <div class="service-card rv" onclick="selectService('Pose Gel')"><span class="service-sakura">🌸</span><div class="service-icon">💅</div><p class="service-name">Pose Gel</p><p class="service-desc">Pose gel longue durée, effet naturel ou glamour.</p><p class="service-price">À partir de 45€</p></div>
+    <div class="service-card rv rv-d1" onclick="selectService('Résine')"><span class="service-sakura">🌸</span><div class="service-icon">✨</div><p class="service-name">Résine</p><p class="service-desc">Allonger et renforcer. Ultra-léger, ultra-naturel.</p><p class="service-price">À partir de 50€</p></div>
+    <div class="service-card rv rv-d2" onclick="selectService('VSP')"><span class="service-sakura">🌸</span><div class="service-icon">🌟</div><p class="service-name">VSP</p><p class="service-desc">Couleur impeccable 3 semaines sans abîmer l'ongle.</p><p class="service-price">À partir de 30€</p></div>
+    <div class="service-card rv rv-d3" onclick="selectService('Nail Art')"><span class="service-sakura">🌸</span><div class="service-icon">🎨</div><p class="service-name">Nail Art</p><p class="service-desc">Créations uniques — florales, géométriques, freestyle.</p><p class="service-price">Sur devis</p></div>
+    <div class="service-card rv rv-d4" onclick="selectService('Remplissage')"><span class="service-sakura">🌸</span><div class="service-icon">🔄</div><p class="service-name">Remplissage</p><p class="service-desc">Entretien toutes les 3-4 semaines.</p><p class="service-price">À partir de 35€</p></div>
+    <div class="service-card rv rv-d4" onclick="selectService('Dépose')"><span class="service-sakura">🌸</span><div class="service-icon">🌿</div><p class="service-name">Dépose</p><p class="service-desc">Dépose douce, sécurisée, préserve l'ongle naturel.</p><p class="service-price">À partir de 15€</p></div>
   </div>
 </section>
 
@@ -479,14 +479,14 @@ footer{background:var(--dark);color:rgba(255,255,255,.7);padding:60px 60px 40px;
   <p class="section-label rv">Mes créations</p>
   <h2 class="rv">Portfolio</h2>
   <div class="portfolio-grid" id="portfolioGrid">
-    <div class="portfolio-item rv"><img src="photos/photo-1.jpg" alt="Gel French Nude" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0"><div class="portfolio-overlay"><span class="portfolio-technique">Gel French Nude</span></div></div>
-    <div class="portfolio-item rv rv-d1"><img src="photos/photo-2.jpg" alt="Nail Art Floral" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0"><div class="portfolio-overlay"><span class="portfolio-technique">Nail Art Floral</span></div></div>
-    <div class="portfolio-item rv rv-d2"><img src="photos/photo-3.jpg" alt="Résine Rose Gold" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0"><div class="portfolio-overlay"><span class="portfolio-technique">Résine Rose Gold</span></div></div>
-    <div class="portfolio-item rv rv-d3"><img src="photos/photo-4.jpg" alt="VSP Bordeaux" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0"><div class="portfolio-overlay"><span class="portfolio-technique">VSP Bordeaux</span></div></div>
-    <div class="portfolio-item rv rv-d1"><img src="photos/photo-5.jpg" alt="Gel Baby Boomer" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0"><div class="portfolio-overlay"><span class="portfolio-technique">Gel Baby Boomer</span></div></div>
-    <div class="portfolio-item rv rv-d2"><img src="photos/photo-6.jpg" alt="Nail Art Géo" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0"><div class="portfolio-overlay"><span class="portfolio-technique">Nail Art Géo</span></div></div>
-    <div class="portfolio-item rv rv-d3"><img src="photos/photo-7.jpg" alt="Chrome Mirror" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0"><div class="portfolio-overlay"><span class="portfolio-technique">Chrome Mirror</span></div></div>
-    <div class="portfolio-item rv rv-d4"><img src="photos/photo-8.jpg" alt="Gel Nude Naturel" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0"><div class="portfolio-overlay"><span class="portfolio-technique">Gel Nude Naturel</span></div></div>
+    <div class="portfolio-item rv"><img src="photos/photo-1.jpg" alt="Gel French Nude" onerror="this.remove()"><div class="portfolio-overlay"><span class="portfolio-technique">Gel French Nude</span></div></div>
+    <div class="portfolio-item rv rv-d1"><img src="photos/photo-2.jpg" alt="Nail Art Floral" onerror="this.remove()"><div class="portfolio-overlay"><span class="portfolio-technique">Nail Art Floral</span></div></div>
+    <div class="portfolio-item rv rv-d2"><img src="photos/photo-3.jpg" alt="Résine Rose Gold" onerror="this.remove()"><div class="portfolio-overlay"><span class="portfolio-technique">Résine Rose Gold</span></div></div>
+    <div class="portfolio-item rv rv-d3"><img src="photos/photo-4.jpg" alt="VSP Bordeaux" onerror="this.remove()"><div class="portfolio-overlay"><span class="portfolio-technique">VSP Bordeaux</span></div></div>
+    <div class="portfolio-item rv rv-d1"><img src="photos/photo-5.jpg" alt="Gel Baby Boomer" onerror="this.remove()"><div class="portfolio-overlay"><span class="portfolio-technique">Gel Baby Boomer</span></div></div>
+    <div class="portfolio-item rv rv-d2"><img src="photos/photo-6.jpg" alt="Nail Art Géo" onerror="this.remove()"><div class="portfolio-overlay"><span class="portfolio-technique">Nail Art Géo</span></div></div>
+    <div class="portfolio-item rv rv-d3"><img src="photos/photo-7.jpg" alt="Chrome Mirror" onerror="this.remove()"><div class="portfolio-overlay"><span class="portfolio-technique">Chrome Mirror</span></div></div>
+    <div class="portfolio-item rv rv-d4"><img src="photos/photo-8.jpg" alt="Gel Nude Naturel" onerror="this.remove()"><div class="portfolio-overlay"><span class="portfolio-technique">Gel Nude Naturel</span></div></div>
   </div>
 </section>
 
@@ -928,6 +928,21 @@ function closeModal(){document.getElementById('confirmModal').classList.remove('
 document.getElementById('confirmModal').addEventListener('click',function(e){if(e.target===this)closeModal();});
 (function(){const m=localStorage.getItem('bm_booking_mode');if(m==='manual'){bookMode='manual';document.getElementById('modeToggle').classList.remove('on');document.getElementById('modeText').textContent='MANUEL';document.getElementById('modeBadge').textContent='En attente';}})();
 initCal();
+
+/* Service card → pre-select service + scroll to booking */
+function selectService(name){
+  document.getElementById('bService').value=name;
+  updateSummary();
+  document.getElementById('reservation').scrollIntoView({behavior:'smooth'});
+}
+
+/* Mobile nav: close on link click */
+document.querySelectorAll('#navLinks a').forEach(a=>{
+  a.addEventListener('click',()=>{
+    document.getElementById('navLinks').classList.remove('mob-open');
+    document.getElementById('burger').classList.remove('open');
+  });
+});
 
 /* ══════════════════════════════════════════════
    ADMIN MODAL
