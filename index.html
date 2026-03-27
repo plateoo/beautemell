@@ -479,14 +479,14 @@ footer{background:var(--dark);color:rgba(255,255,255,.7);padding:60px 60px 40px;
   <p class="section-label rv">Mes créations</p>
   <h2 class="rv">Portfolio</h2>
   <div class="portfolio-grid" id="portfolioGrid">
-    <div class="portfolio-item rv"><div class="port-placeholder"><span>🌸</span><small>Gel French Nude</small></div><div class="portfolio-overlay"><span class="portfolio-technique">Gel French Nude</span></div></div>
-    <div class="portfolio-item rv rv-d1"><div class="port-placeholder"><span>💅</span><small>Nail Art Floral</small></div><div class="portfolio-overlay"><span class="portfolio-technique">Nail Art Floral</span></div></div>
-    <div class="portfolio-item rv rv-d2"><div class="port-placeholder"><span>✨</span><small>Résine Rose Gold</small></div><div class="portfolio-overlay"><span class="portfolio-technique">Résine Rose Gold</span></div></div>
-    <div class="portfolio-item rv rv-d3"><div class="port-placeholder"><span>🌷</span><small>VSP Bordeaux</small></div><div class="portfolio-overlay"><span class="portfolio-technique">VSP Bordeaux</span></div></div>
-    <div class="portfolio-item rv rv-d1"><div class="port-placeholder"><span>🎀</span><small>Gel Baby Boomer</small></div><div class="portfolio-overlay"><span class="portfolio-technique">Gel Baby Boomer</span></div></div>
-    <div class="portfolio-item rv rv-d2"><div class="port-placeholder"><span>🌺</span><small>Nail Art Géo</small></div><div class="portfolio-overlay"><span class="portfolio-technique">Nail Art Géo</span></div></div>
-    <div class="portfolio-item rv rv-d3"><div class="port-placeholder"><span>💎</span><small>Chrome Mirror</small></div><div class="portfolio-overlay"><span class="portfolio-technique">Chrome Mirror</span></div></div>
-    <div class="portfolio-item rv rv-d4"><div class="port-placeholder"><span>🦋</span><small>Gel Nude Naturel</small></div><div class="portfolio-overlay"><span class="portfolio-technique">Gel Nude Naturel</span></div></div>
+    <div class="portfolio-item rv"><img src="photos/photo-1.jpg" alt="Gel French Nude" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0"><div class="portfolio-overlay"><span class="portfolio-technique">Gel French Nude</span></div></div>
+    <div class="portfolio-item rv rv-d1"><img src="photos/photo-2.jpg" alt="Nail Art Floral" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0"><div class="portfolio-overlay"><span class="portfolio-technique">Nail Art Floral</span></div></div>
+    <div class="portfolio-item rv rv-d2"><img src="photos/photo-3.jpg" alt="Résine Rose Gold" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0"><div class="portfolio-overlay"><span class="portfolio-technique">Résine Rose Gold</span></div></div>
+    <div class="portfolio-item rv rv-d3"><img src="photos/photo-4.jpg" alt="VSP Bordeaux" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0"><div class="portfolio-overlay"><span class="portfolio-technique">VSP Bordeaux</span></div></div>
+    <div class="portfolio-item rv rv-d1"><img src="photos/photo-5.jpg" alt="Gel Baby Boomer" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0"><div class="portfolio-overlay"><span class="portfolio-technique">Gel Baby Boomer</span></div></div>
+    <div class="portfolio-item rv rv-d2"><img src="photos/photo-6.jpg" alt="Nail Art Géo" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0"><div class="portfolio-overlay"><span class="portfolio-technique">Nail Art Géo</span></div></div>
+    <div class="portfolio-item rv rv-d3"><img src="photos/photo-7.jpg" alt="Chrome Mirror" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0"><div class="portfolio-overlay"><span class="portfolio-technique">Chrome Mirror</span></div></div>
+    <div class="portfolio-item rv rv-d4"><img src="photos/photo-8.jpg" alt="Gel Nude Naturel" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0"><div class="portfolio-overlay"><span class="portfolio-technique">Gel Nude Naturel</span></div></div>
   </div>
 </section>
 
@@ -689,7 +689,7 @@ footer{background:var(--dark);color:rgba(255,255,255,.7);padding:60px 60px 40px;
 
 <script>
 /* ══════════════════════════════════════════════
-   SAKURA CANVAS — simplified, OPAQUE, visible
+   SAKURA CANVAS — éclosion rapide, fleurs denses
 ══════════════════════════════════════════════ */
 (function(){
 const canvas = document.getElementById('sakuraCanvas');
@@ -697,176 +697,130 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 const ctx = canvas.getContext('2d');
 
-/* S-curve branch points traversing page */
 const branchPoints = [
-  {x:0.08, y:1.0},
-  {x:0.15, y:0.82},
-  {x:0.28, y:0.68},
-  {x:0.18, y:0.52},
-  {x:0.35, y:0.38},
-  {x:0.55, y:0.28},
-  {x:0.45, y:0.15},
-  {x:0.65, y:0.05}
+  {x:0.08,y:1.0},{x:0.15,y:0.82},{x:0.28,y:0.68},{x:0.18,y:0.52},
+  {x:0.35,y:0.38},{x:0.55,y:0.28},{x:0.45,y:0.15},{x:0.65,y:0.05}
 ];
-/* Sub-branches */
 const subBranches = [
-  {from:2, pts:[{x:0.28,y:0.68},{x:0.42,y:0.62},{x:0.55,y:0.55},{x:0.65,y:0.50}], w:8},
-  {from:3, pts:[{x:0.18,y:0.52},{x:0.05,y:0.45},{x:-0.02,y:0.38}], w:6},
-  {from:4, pts:[{x:0.35,y:0.38},{x:0.50,y:0.32},{x:0.62,y:0.25},{x:0.72,y:0.20}], w:7},
-  {from:6, pts:[{x:0.45,y:0.15},{x:0.32,y:0.08},{x:0.25,y:0.02}], w:5},
+  {pts:[{x:.28,y:.68},{x:.42,y:.62},{x:.55,y:.55},{x:.65,y:.50}], w:9},
+  {pts:[{x:.18,y:.52},{x:.05,y:.45},{x:-.02,y:.38}], w:7},
+  {pts:[{x:.35,y:.38},{x:.50,y:.32},{x:.62,y:.25},{x:.72,y:.20}], w:8},
+  {pts:[{x:.45,y:.15},{x:.32,y:.08},{x:.25,y:.02}], w:6},
 ];
 
-/* Draw thick branch as FILLED POLYGON */
 function drawThickBranch(points, progress, W, H, baseW) {
   const count = Math.floor(points.length * progress);
   if(count < 2) return;
   for(let i=0; i<count-1; i++) {
-    const p1 = {x:points[i].x*W, y:points[i].y*H};
-    const p2 = {x:points[i+1].x*W, y:points[i+1].y*H};
-    const thickness = baseW - i * (baseW/(points.length));
-    if(thickness < 1) continue;
-    const dx = p2.x-p1.x, dy = p2.y-p1.y;
-    const len = Math.sqrt(dx*dx+dy*dy) || 1;
-    const nx = -dy/len * thickness;
-    const ny = dx/len * thickness;
-    /* Main polygon fill */
+    const p1={x:points[i].x*W,y:points[i].y*H};
+    const p2={x:points[i+1].x*W,y:points[i+1].y*H};
+    const thick = baseW - i*(baseW/points.length);
+    if(thick<1)continue;
+    const dx=p2.x-p1.x,dy=p2.y-p1.y;
+    const len=Math.sqrt(dx*dx+dy*dy)||1;
+    const nx=-dy/len*thick, ny=dx/len*thick;
     ctx.beginPath();
-    ctx.moveTo(p1.x+nx, p1.y+ny);
-    ctx.lineTo(p2.x+nx*0.8, p2.y+ny*0.8);
-    ctx.lineTo(p2.x-nx*0.8, p2.y-ny*0.8);
-    ctx.lineTo(p1.x-nx, p1.y-ny);
+    ctx.moveTo(p1.x+nx,p1.y+ny);ctx.lineTo(p2.x+nx*.8,p2.y+ny*.8);
+    ctx.lineTo(p2.x-nx*.8,p2.y-ny*.8);ctx.lineTo(p1.x-nx,p1.y-ny);
     ctx.closePath();
-    ctx.fillStyle = i<2 ? '#5c2e0e' : i<4 ? '#7a4020' : '#9a6035';
+    ctx.fillStyle = i<2?'#5c2e0e':i<4?'#7a4020':'#9a6035';
     ctx.fill();
-    /* Highlight stripe */
     ctx.beginPath();
-    ctx.moveTo(p1.x+nx*0.3+2, p1.y+ny*0.3+2);
-    ctx.lineTo(p2.x+nx*0.2+2, p2.y+ny*0.2+2);
-    ctx.lineTo(p2.x-nx*0.15+2, p2.y-ny*0.15+2);
-    ctx.lineTo(p1.x-nx*0.2+2, p1.y-ny*0.2+2);
-    ctx.closePath();
-    ctx.fillStyle = 'rgba(139,74,40,0.35)';
-    ctx.fill();
+    ctx.moveTo(p1.x+nx*.3+2,p1.y+ny*.3+2);ctx.lineTo(p2.x+nx*.2+2,p2.y+ny*.2+2);
+    ctx.lineTo(p2.x-nx*.15+2,p2.y-ny*.15+2);ctx.lineTo(p1.x-nx*.2+2,p1.y-ny*.2+2);
+    ctx.closePath();ctx.fillStyle='rgba(139,74,40,0.35)';ctx.fill();
   }
 }
 
-/* Opaque flower — NO transparency tricks */
+/* Fleur 100% opaque, 2 couches */
 function drawFlower(x, y, size, openProgress) {
-  if(openProgress <= 0) return;
-  /* Bud phase */
-  if(openProgress < 0.25) {
-    const bf = openProgress / 0.25;
-    ctx.beginPath();
-    ctx.ellipse(x, y, size*0.2*bf, size*0.35*bf, 0, 0, Math.PI*2);
-    ctx.fillStyle = '#d85070';
-    ctx.fill();
-    return;
+  if(openProgress<=0) return;
+  if(openProgress<.2){
+    const bf=openProgress/.2;
+    ctx.beginPath();ctx.ellipse(x,y,size*.2*bf,size*.38*bf,0,0,Math.PI*2);
+    ctx.fillStyle='#d85070';ctx.fill();return;
   }
-  const s = size * Math.min(openProgress, 1);
-  ctx.save();
-  ctx.translate(x, y);
-  ctx.scale(Math.min(openProgress, 1), Math.min(openProgress, 1));
-  /* 5 opaque petals */
-  for(let i=0; i<5; i++) {
-    ctx.save();
-    ctx.rotate(i * Math.PI*2/5);
-    ctx.beginPath();
-    ctx.ellipse(0, -s*0.6, s*0.35, s*0.6, 0, 0, Math.PI*2);
-    ctx.fillStyle = 'rgba(249,180,200,0.95)';
-    ctx.fill();
+  const s=size*Math.min(openProgress,1);
+  ctx.save();ctx.translate(x,y);
+  ctx.scale(Math.min(openProgress,1),Math.min(openProgress,1));
+  for(let i=0;i<5;i++){
+    ctx.save();ctx.rotate(i*Math.PI*2/5);
+    ctx.beginPath();ctx.ellipse(0,-s*.6,s*.38,s*.62,0,0,Math.PI*2);
+    ctx.fillStyle='#fff0f5';ctx.fill();
+    ctx.beginPath();ctx.ellipse(0,-s*.6,s*.36,s*.6,0,0,Math.PI*2);
+    ctx.fillStyle='#f9b4c8';ctx.fill();
     ctx.restore();
   }
-  /* White center */
-  ctx.beginPath();
-  ctx.arc(0, 0, s*0.22, 0, Math.PI*2);
-  ctx.fillStyle = '#fff8f9';
-  ctx.fill();
-  /* 8 stamens — bordeaux */
-  for(let i=0; i<8; i++) {
-    const a = i*Math.PI/4;
-    const cx = Math.cos(a), sy = Math.sin(a);
-    ctx.beginPath();
-    ctx.moveTo(cx*s*0.1, sy*s*0.1);
-    ctx.lineTo(cx*s*0.38, sy*s*0.38);
-    ctx.strokeStyle = '#9b3060';
-    ctx.lineWidth = 0.9;
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.arc(cx*s*0.38, sy*s*0.38, s*0.05, 0, Math.PI*2);
-    ctx.fillStyle = '#9b3060';
-    ctx.fill();
+  ctx.beginPath();ctx.arc(0,0,s*.24,0,Math.PI*2);
+  ctx.fillStyle='#fff8f9';ctx.fill();
+  for(let i=0;i<8;i++){
+    const a=i*Math.PI/4;
+    const cx2=Math.cos(a),sy2=Math.sin(a);
+    ctx.beginPath();ctx.moveTo(cx2*s*.1,sy2*s*.1);ctx.lineTo(cx2*s*.4,sy2*s*.4);
+    ctx.strokeStyle='#9b3060';ctx.lineWidth=1;ctx.stroke();
+    ctx.beginPath();ctx.arc(cx2*s*.4,sy2*s*.4,s*.055,0,Math.PI*2);
+    ctx.fillStyle='#9b3060';ctx.fill();
   }
   ctx.restore();
 }
 
-/* Flower cluster positions at branch joints */
+/* 14 clusters — denses, sur branches principales + sous-branches */
 const flowerPositions = [
-  {x:0.28,y:0.68, delay:0.20, sub:true},
-  {x:0.55,y:0.55, delay:0.28, sub:true},
-  {x:0.18,y:0.52, delay:0.32, sub:false},
-  {x:0.05,y:0.38, delay:0.38, sub:true},
-  {x:0.35,y:0.38, delay:0.42, sub:false},
-  {x:0.62,y:0.25, delay:0.52, sub:true},
-  {x:0.72,y:0.20, delay:0.56, sub:true},
-  {x:0.55,y:0.28, delay:0.60, sub:false},
-  {x:0.45,y:0.15, delay:0.68, sub:false},
-  {x:0.25,y:0.02, delay:0.74, sub:true},
-  {x:0.65,y:0.05, delay:0.80, sub:false},
+  {x:.28,y:.68,d:.15},{x:.22,y:.60,d:.18},
+  {x:.55,y:.55,d:.22},{x:.65,y:.50,d:.25},
+  {x:.18,y:.52,d:.28},{x:.05,y:.45,d:.32},{x:-.02,y:.38,d:.35},
+  {x:.35,y:.38,d:.38},{x:.50,y:.32,d:.42},{x:.62,y:.25,d:.46},{x:.72,y:.20,d:.50},
+  {x:.55,y:.28,d:.54},{x:.45,y:.15,d:.60},{x:.32,y:.08,d:.64},{x:.25,y:.02,d:.68},
+  {x:.65,y:.05,d:.74},
 ];
 
-let scrollP = 0, targetP = 0;
+/* Éclosion rapide */
+let currentProgress=0, targetProgress=0;
+function lerp(a,b,t){return a+(b-a)*t;}
 
-function render() {
-  const W = canvas.width, H = canvas.height;
+window.addEventListener('scroll',()=>{
+  targetProgress=Math.min(window.scrollY/Math.max(1,document.body.scrollHeight-window.innerHeight),1);
+},{passive:true});
+
+function render(p){
+  const W=canvas.width,H=canvas.height;
   ctx.clearRect(0,0,W,H);
-  const p = scrollP;
-  /* Main trunk */
-  drawThickBranch(branchPoints, Math.min(p*2.2, 1), W, H, 20);
-  /* Sub-branches */
-  subBranches.forEach((sb,i) => {
-    const subStart = 0.15 + i*0.15;
-    const subProg = Math.max(0, (p - subStart) / 0.25);
-    drawThickBranch(sb.pts, Math.min(subProg, 1), W, H, sb.w);
+  /* Tronc — pousse vite (×1.5) */
+  drawThickBranch(branchPoints,Math.min(p*1.5,1),W,H,22);
+  /* Sous-branches */
+  subBranches.forEach((sb,i)=>{
+    const st=.12+i*.13;
+    drawThickBranch(sb.pts,Math.min(Math.max(0,(p-st)/.2),1),W,H,sb.w);
   });
-  /* Flowers at each position — bouquets of 3 */
-  flowerPositions.forEach(f => {
-    const open = Math.max(0, (p - f.delay) / 0.12);
-    if(open <= 0) return;
-    const fx = f.x*W, fy = f.y*H;
-    drawFlower(fx, fy, 18, Math.min(open, 1));
-    drawFlower(fx-20, fy-12, 14, Math.min(open*0.85, 1));
-    drawFlower(fx+22, fy-8, 15, Math.min(open*0.75, 1));
+  /* Fleurs — éclosion rapide (÷0.05) + 5 par cluster */
+  flowerPositions.forEach(f=>{
+    const open=Math.max(0,Math.min(1,(p-f.d)/.05));
+    if(open<=0)return;
+    const fx=f.x*W,fy=f.y*H;
+    drawFlower(fx,fy,22,open);
+    drawFlower(fx-22,fy-14,17,Math.min(open*1.1,1));
+    drawFlower(fx+24,fy-10,18,Math.min(open*.95,1));
+    drawFlower(fx-10,fy+18,15,Math.min(open*.85,1));
+    drawFlower(fx+16,fy+14,16,Math.min(open*.9,1));
     /* Buds */
-    if(open < 1.5) {
-      ctx.beginPath();
-      ctx.ellipse(fx+30, fy+5, 4, 7, 0.3, 0, Math.PI*2);
-      ctx.fillStyle = '#d85070';
-      ctx.fill();
-      ctx.beginPath();
-      ctx.ellipse(fx-28, fy+8, 3.5, 6, -0.3, 0, Math.PI*2);
-      ctx.fillStyle = '#e06080';
-      ctx.fill();
+    if(open<1.2){
+      ctx.beginPath();ctx.ellipse(fx+34,fy+6,4,8,.3,0,Math.PI*2);ctx.fillStyle='#d85070';ctx.fill();
+      ctx.beginPath();ctx.ellipse(fx-32,fy+10,3.5,7,-.3,0,Math.PI*2);ctx.fillStyle='#e06080';ctx.fill();
+      ctx.beginPath();ctx.ellipse(fx+8,fy-28,3,6,.6,0,Math.PI*2);ctx.fillStyle='#d85070';ctx.fill();
     }
   });
 }
 
-function animate() {
-  scrollP += (targetP - scrollP) * 0.06;
-  render();
+function animate(){
+  currentProgress=lerp(currentProgress,targetProgress,0.12);
+  render(currentProgress);
   requestAnimationFrame(animate);
 }
-
-window.addEventListener('scroll', () => {
-  targetP = window.scrollY / Math.max(1, document.body.scrollHeight - window.innerHeight);
-}, {passive:true});
-
-window.addEventListener('resize', () => {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-  render();
-});
-
 animate();
+
+window.addEventListener('resize',()=>{
+  canvas.width=window.innerWidth;canvas.height=window.innerHeight;
+});
 })();
 
 /* ══════════════════════════════════════════════
