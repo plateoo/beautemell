@@ -13,7 +13,9 @@
 html{scroll-behavior:smooth;}
 body{font-family:'Jost',sans-serif;font-weight:300;background:var(--cream);color:var(--text);overflow-x:hidden;}
 
-/* ═══ SAKURA (hero canvas) ═══ */
+/* ═══ SAKURA BRANCH (hero image) ═══ */
+.hero-branch{position:absolute;bottom:0;left:0;width:65%;height:auto;opacity:0;z-index:1;pointer-events:none;animation:branchIn 1.8s ease forwards;}
+@keyframes branchIn{from{opacity:0;transform:translateX(-40px) translateY(40px);}to{opacity:.88;transform:none;}}
 
 /* ═══ NAV ═══ */
 nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:18px 60px;display:flex;align-items:center;justify-content:space-between;transition:background .4s,box-shadow .4s;}
@@ -39,7 +41,7 @@ h2{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(2rem
 .rv-d1{transition-delay:.1s;}.rv-d2{transition-delay:.2s;}.rv-d3{transition-delay:.3s;}.rv-d4{transition-delay:.4s;}
 
 /* ═══ HERO ═══ */
-#hero{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:120px 60px 80px;background:linear-gradient(135deg,rgba(255,245,247,.92) 0%,rgba(255,251,252,.88) 60%,rgba(255,248,240,.85) 100%);overflow:hidden;text-align:center;position:relative;}
+#hero{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:120px 60px 80px;background:linear-gradient(160deg,#fffbfc,#fdf5f7,#faeaee);overflow:hidden;text-align:center;position:relative;}
 .hero-content{max-width:700px;position:relative;z-index:2;margin:0 auto;}
 .hero-eyebrow{font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;}
 .hero-title{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(3.5rem,8vw,6rem);font-weight:300;line-height:1.0;color:var(--dark);margin-bottom:16px;}
@@ -368,7 +370,7 @@ footer{background:var(--dark);color:rgba(255,255,255,.7);padding:60px 60px 40px;
   .adm-tabs{flex-wrap:wrap;gap:2px;}
 }
 @media(max-width:600px){
-  #hero canvas{opacity:.7;}
+  .hero-branch{width:90%;opacity:.6;}
   section{padding:60px 1.5rem;}
   #tarifs{padding:60px 1.5rem;}
   #hero{padding:100px 1.5rem 60px;}
@@ -410,6 +412,7 @@ footer{background:var(--dark);color:rgba(255,255,255,.7);padding:60px 60px 40px;
 
 <!-- HERO -->
 <section id="hero">
+  <img src="sakura-branch.png" alt="" class="hero-branch">
   <div class="hero-content">
     <p class="hero-eyebrow rv">Saint-Georges · Liège · Belgique</p>
     <h1 class="hero-title rv rv-d1">Beauté<br><span>Mell</span></h1>
@@ -688,123 +691,7 @@ footer{background:var(--dark);color:rgba(255,255,255,.7);padding:60px 60px 40px;
 </div>
 
 <script>
-/* ══════════════════════════════════════════════
-   SAKURA — Canvas 2D pur, hero only
-══════════════════════════════════════════════ */
-(function(){
-  var hero = document.getElementById('hero');
-  if(!hero) return;
-  hero.style.overflow = 'hidden';
-
-  var cv = document.createElement('canvas');
-  cv.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1;';
-  hero.insertBefore(cv, hero.firstChild);
-  var ctx = cv.getContext('2d');
-  var W, H;
-
-  function resize(){ W = cv.width = hero.offsetWidth; H = cv.height = hero.offsetHeight; }
-  resize();
-  window.addEventListener('resize', resize);
-
-  function branch(x1,y1,x2,y2,w,progress,color){
-    if(progress<=0) return;
-    var ex=x1+(x2-x1)*progress, ey=y1+(y2-y1)*progress;
-    var cpx=(x1+ex)/2+(y2-y1)*0.15, cpy=(y1+ey)/2-(x2-x1)*0.1;
-    ctx.beginPath(); ctx.moveTo(x1,y1);
-    ctx.quadraticCurveTo(cpx,cpy,ex,ey);
-    ctx.strokeStyle=color; ctx.lineWidth=w; ctx.lineCap='round'; ctx.lineJoin='round'; ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(x1+w*0.2,y1);
-    ctx.quadraticCurveTo(cpx+w*0.15,cpy,ex+w*0.15,ey);
-    ctx.strokeStyle='rgba(180,120,60,0.25)'; ctx.lineWidth=w*0.4; ctx.stroke();
-  }
-
-  function flower(x,y,r,open,wind){
-    if(open<=0) return;
-    var s=r*Math.min(open,1);
-    ctx.save(); ctx.translate(x,y); ctx.rotate(wind);
-    for(var i=0;i<5;i++){
-      ctx.save(); ctx.rotate(i*Math.PI*2/5+Math.PI/10);
-      ctx.beginPath(); ctx.moveTo(0,0);
-      ctx.bezierCurveTo(s*.4,-s*.1,s*.55,-s*.9,0,-s*1.15);
-      ctx.bezierCurveTo(-s*.55,-s*.9,-s*.4,-s*.1,0,0);
-      var g=ctx.createRadialGradient(0,-s*.4,0,0,-s*.6,s);
-      g.addColorStop(0,'rgba(255,230,238,1)');g.addColorStop(0.5,'rgba(249,184,204,0.97)');g.addColorStop(1,'rgba(235,140,175,0.85)');
-      ctx.fillStyle=g; ctx.fill();
-      ctx.beginPath(); ctx.moveTo(0,-s*.05); ctx.lineTo(0,-s*1.0);
-      ctx.strokeStyle='rgba(210,100,140,0.2)'; ctx.lineWidth=s*.06; ctx.stroke();
-      ctx.restore();
-    }
-    var cg=ctx.createRadialGradient(0,0,0,0,0,s*.3);
-    cg.addColorStop(0,'#fff8fa');cg.addColorStop(1,'#ffd8e8');
-    ctx.beginPath();ctx.arc(0,0,s*.28,0,Math.PI*2);ctx.fillStyle=cg;ctx.fill();
-    for(var j=0;j<10;j++){
-      var a=j*Math.PI/5+0.15,len=s*.52;
-      ctx.beginPath();ctx.moveTo(Math.cos(a)*s*.12,Math.sin(a)*s*.12);ctx.lineTo(Math.cos(a)*len,Math.sin(a)*len);
-      ctx.strokeStyle='rgba(155,40,80,0.7)';ctx.lineWidth=s*.05;ctx.stroke();
-      ctx.beginPath();ctx.arc(Math.cos(a)*len,Math.sin(a)*len,s*.07,0,Math.PI*2);ctx.fillStyle='#9b2855';ctx.fill();
-    }
-    ctx.restore();
-  }
-
-  function bud(x,y,size,open){
-    if(open<=0)return;
-    ctx.save();ctx.translate(x,y);
-    ctx.beginPath();ctx.ellipse(0,0,size*.35,size*.7*Math.min(open,1),0,0,Math.PI*2);
-    var g=ctx.createLinearGradient(0,-size*.7,0,size*.2);g.addColorStop(0,'#e06078');g.addColorStop(1,'#f5a0b8');
-    ctx.fillStyle=g;ctx.fill();ctx.restore();
-  }
-
-  var T=0, windT=0;
-
-  var trunkPts=[[.05*W,1.02*H],[.10*W,.88*H],[.16*W,.75*H],[.20*W,.62*H],[.14*W,.50*H],[.22*W,.38*H]];
-  var trunkW=[28,24,20,16,12,8];
-  var trunkC=['#4a2008','#5c2e0e','#6b3818','#7a4020','#8b4a28','#9a5530'];
-
-  var bData=[
-    [.22,.38,.50,.22,10,.35,'#9a5530'],[.22,.38,.05,.25,9,.40,'#8b4a28'],
-    [.50,.22,.72,.12,7,.50,'#a06038'],[.50,.22,.38,.08,6,.52,'#b07040'],
-    [.05,.25,-.05,.15,6,.45,'#9a5530'],[.72,.12,.90,.05,5,.60,'#b07040'],
-    [.38,.08,.55,.02,4,.62,'#b87848']
-  ];
-  var smData=[
-    [.50,.22,.58,.16,4,.55],[.50,.22,.44,.16,3.5,.53],[.72,.12,.78,.06,3,.63],
-    [.38,.08,.32,.03,3,.64],[.05,.25,.12,.18,3.5,.48],[.16,.75,.28,.68,5,.25],[.20,.62,.30,.55,4,.30]
-  ];
-  var flData=[
-    [.50,.22,14,.60,0],[.52,.20,13,.62,.8],[.48,.19,12,.61,1.6],[.54,.24,11,.63,2.4],[.46,.22,12,.64,3.2],
-    [.72,.12,13,.72,.3],[.74,.10,12,.74,1.1],[.70,.10,11,.73,1.9],[.76,.13,10,.75,2.7],
-    [.05,.25,13,.65,.5],[.03,.23,12,.67,1.3],[.07,.22,11,.66,2.1],
-    [.38,.08,12,.70,.2],[.40,.06,11,.72,1.0],[.36,.07,10,.71,1.8],
-    [.90,.05,11,.78,.4],[.88,.04,10,.80,1.2],
-    [.28,.68,10,.38,.6],[.30,.55,10,.42,1.4],[.12,.18,10,.58,2.2],
-    [.55,.02,9,.76,.9],[.32,.03,9,.78,1.7],[.58,.16,10,.65,.1],[.44,.16,10,.66,.7],[.78,.06,9,.74,1.5]
-  ];
-  var budData=[
-    [.53,.18,6,.58],[.47,.21,5,.59],[.73,.08,5,.70],[.69,.11,5,.71],
-    [.04,.21,5,.63],[.08,.24,5,.64],[.39,.05,5,.68],[.37,.09,4,.69],[.91,.04,4,.77],[.89,.06,4,.78]
-  ];
-
-  function drawAll(){
-    ctx.clearRect(0,0,W,H);
-    var eT=1-(1-T)*(1-T);
-    for(var i=0;i<trunkPts.length-1;i++){
-      var ss=i/(trunkPts.length-1),se=(i+1)/(trunkPts.length-1);
-      branch(trunkPts[i][0],trunkPts[i][1],trunkPts[i+1][0],trunkPts[i+1][1],trunkW[i],Math.max(0,Math.min(1,(eT-ss)/(se-ss))),trunkC[i]);
-    }
-    bData.forEach(function(d){branch(d[0]*W,d[1]*H,d[2]*W,d[3]*H,d[4],Math.max(0,Math.min(1,(eT-d[5])/(1-d[5]))),d[6]);});
-    smData.forEach(function(d){branch(d[0]*W,d[1]*H,d[2]*W,d[3]*H,d[4],Math.max(0,Math.min(1,(eT-d[5])/(1-d[5]))),'#a06038');});
-    flData.forEach(function(d){flower(d[0]*W,d[1]*H,d[2],Math.max(0,Math.min(1,(eT-d[3])/0.08)),Math.sin(windT+d[4])*0.06);});
-    budData.forEach(function(d){bud(d[0]*W,d[1]*H,d[2],Math.max(0,Math.min(1,(eT-d[3])/0.06)));});
-  }
-
-  function loop(){
-    requestAnimationFrame(loop);
-    windT+=0.018;
-    if(T<1) T=Math.min(T+0.008,1);
-    drawAll();
-  }
-  loop();
-})();
+/* Sakura branch = static PNG image in hero */
 
 /* ══════════════════════════════════════════════
    SCROLL REVEAL + NAV
