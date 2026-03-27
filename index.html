@@ -13,8 +13,7 @@
 html{scroll-behavior:smooth;}
 body{font-family:'Jost',sans-serif;font-weight:300;background:var(--cream);color:var(--text);overflow-x:hidden;}
 
-/* ═══ SAKURA 3D (hero only) ═══ */
-#sakura3d canvas{display:block;}
+/* ═══ SAKURA (hero canvas) ═══ */
 
 /* ═══ NAV ═══ */
 nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:18px 60px;display:flex;align-items:center;justify-content:space-between;transition:background .4s,box-shadow .4s;}
@@ -369,7 +368,7 @@ footer{background:var(--dark);color:rgba(255,255,255,.7);padding:60px 60px 40px;
   .adm-tabs{flex-wrap:wrap;gap:2px;}
 }
 @media(max-width:600px){
-  #sakura3d{opacity:.65;}
+  #hero canvas{opacity:.7;}
   section{padding:60px 1.5rem;}
   #tarifs{padding:60px 1.5rem;}
   #hero{padding:100px 1.5rem 60px;}
@@ -390,7 +389,6 @@ footer{background:var(--dark);color:rgba(255,255,255,.7);padding:60px 60px 40px;
   .tarif-admin-row{grid-template-columns:1fr 1fr;gap:8px;}
 }
 </style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
 
@@ -412,7 +410,6 @@ footer{background:var(--dark);color:rgba(255,255,255,.7);padding:60px 60px 40px;
 
 <!-- HERO -->
 <section id="hero">
-  <div id="sakura3d" style="position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden;"></div>
   <div class="hero-content">
     <p class="hero-eyebrow rv">Saint-Georges · Liège · Belgique</p>
     <h1 class="hero-title rv rv-d1">Beauté<br><span>Mell</span></h1>
@@ -689,127 +686,189 @@ footer{background:var(--dark);color:rgba(255,255,255,.7);padding:60px 60px 40px;
 
 <script>
 /* ══════════════════════════════════════════════
-   SAKURA 3D — Three.js hero only
+   SAKURA — Canvas 2D, hero only, branche organique
 ══════════════════════════════════════════════ */
 (function(){
-if(typeof THREE==='undefined')return;
-const container=document.getElementById('sakura3d');
-if(!container)return;
+const hero = document.getElementById('hero');
+if(!hero) return;
+const canvas = document.createElement('canvas');
+canvas.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1;background:transparent;';
+canvas.width = hero.offsetWidth || window.innerWidth;
+canvas.height = hero.offsetHeight || window.innerHeight;
+hero.insertBefore(canvas, hero.firstChild);
+const ctx = canvas.getContext('2d');
 
-const renderer=new THREE.WebGLRenderer({alpha:true,antialias:true});
-renderer.setSize(container.offsetWidth,container.offsetHeight);
-renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
-renderer.setClearColor(0x000000,0);
-container.appendChild(renderer.domElement);
-
-const scene=new THREE.Scene();
-const camera=new THREE.PerspectiveCamera(60,container.offsetWidth/container.offsetHeight,0.1,100);
-camera.position.set(0,0,5);
-
-/* Lighting */
-scene.add(new THREE.AmbientLight(0xffeeff,0.8));
-const dirLight=new THREE.DirectionalLight(0xffffff,0.6);
-dirLight.position.set(2,3,2);
-scene.add(dirLight);
-
-/* Create branch segment */
-function mkBranch(x1,y1,z1,x2,y2,z2,rTop,rBot,color){
-  const dir=new THREE.Vector3(x2-x1,y2-y1,z2-z1);
-  const len=dir.length();
-  const geom=new THREE.CylinderGeometry(rTop,rBot,len,8);
-  const mat=new THREE.MeshLambertMaterial({color:color});
-  const mesh=new THREE.Mesh(geom,mat);
-  mesh.position.set((x1+x2)/2,(y1+y2)/2,(z1+z2)/2);
-  mesh.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),dir.normalize());
-  mesh.scale.y=0;
-  return mesh;
+function drawBranch(x1,y1,x2,y2,width,progress){
+  if(progress<=0) return;
+  const dx=x2-x1, dy=y2-y1;
+  const len = Math.sqrt(dx*dx+dy*dy);
+  const steps = Math.floor(len/4);
+  const maxS = Math.floor(steps*Math.min(progress,1));
+  for(let i=0;i<=maxS;i++){
+    const t = i/steps;
+    const x = x1+dx*t;
+    const y = y1+dy*t;
+    const w = width*(1-t*0.7);
+    const r = Math.floor(92+t*50);
+    const g = Math.floor(46+t*30);
+    const b = Math.floor(14+t*20);
+    ctx.beginPath();
+    ctx.arc(x,y,Math.max(w,0.5),0,Math.PI*2);
+    ctx.fillStyle='rgb('+r+','+g+','+b+')';
+    ctx.fill();
+  }
+  const endX=x1+dx*Math.min(progress,1), endY=y1+dy*Math.min(progress,1);
+  ctx.beginPath();
+  ctx.moveTo(x1,y1);
+  ctx.quadraticCurveTo((x1+endX)/2-3,(y1+endY)/2-3,endX,endY);
+  ctx.strokeStyle='rgba(180,120,60,0.25)';
+  ctx.lineWidth=width*0.4;
+  ctx.lineCap='round';
+  ctx.stroke();
 }
 
-/* Create flower group */
-function mkFlower(x,y,z){
-  const g=new THREE.Group();
+function drawSakuraFlower(x,y,size,openProgress,rotation){
+  if(openProgress<=0)return;
+  const s = size*Math.min(openProgress,1);
+  ctx.save();
+  ctx.translate(x,y);
+  ctx.rotate(rotation||0);
   for(let i=0;i<5;i++){
-    const pg=new THREE.SphereGeometry(0.12,8,6);
-    pg.scale(1,1.6,0.3);
-    const pm=new THREE.MeshLambertMaterial({color:0xf9b8cc,transparent:true,opacity:0.95});
-    const p=new THREE.Mesh(pg,pm);
-    p.rotation.z=i*Math.PI*2/5;
-    p.position.set(Math.cos(i*Math.PI*2/5)*0.1,Math.sin(i*Math.PI*2/5)*0.1,0);
-    g.add(p);
+    ctx.save();
+    ctx.rotate(i*Math.PI*2/5 + Math.PI/10);
+    ctx.beginPath();
+    ctx.moveTo(0,0);
+    ctx.bezierCurveTo(s*0.55,-s*0.15,s*0.65,-s*1.05,0,-s*1.15);
+    ctx.bezierCurveTo(-s*0.65,-s*1.05,-s*0.55,-s*0.15,0,0);
+    const grad = ctx.createLinearGradient(0,0,0,-s*1.1);
+    grad.addColorStop(0,'rgba(255,220,232,0.95)');
+    grad.addColorStop(0.4,'rgba(252,195,215,0.92)');
+    grad.addColorStop(1,'rgba(240,160,190,0.85)');
+    ctx.fillStyle=grad;
+    ctx.fill();
+    ctx.beginPath();
+    ctx.moveTo(0,-s*0.1);
+    ctx.lineTo(0,-s*0.95);
+    ctx.strokeStyle='rgba(200,100,140,0.12)';
+    ctx.lineWidth=s*0.08;
+    ctx.stroke();
+    ctx.restore();
   }
-  const cg=new THREE.Mesh(new THREE.SphereGeometry(0.06,8,8),new THREE.MeshLambertMaterial({color:0xfffaf0}));
-  g.add(cg);
-  /* Stamens */
-  for(let i=0;i<6;i++){
-    const sg=new THREE.CylinderGeometry(0.005,0.005,0.1,4);
-    const sm=new THREE.Mesh(sg,new THREE.MeshBasicMaterial({color:0x9b3060}));
-    const a=i*Math.PI*2/6;
-    sm.position.set(Math.cos(a)*0.06,Math.sin(a)*0.06,0.03);
-    sm.rotation.x=Math.PI/2;
-    g.add(sm);
-    const tip=new THREE.Mesh(new THREE.SphereGeometry(0.012,4,4),new THREE.MeshBasicMaterial({color:0x9b3060}));
-    tip.position.set(Math.cos(a)*0.06,Math.sin(a)*0.06,0.08);
-    g.add(tip);
+  const cg=ctx.createRadialGradient(0,0,0,0,0,s*0.28);
+  cg.addColorStop(0,'rgba(255,252,248,1)');
+  cg.addColorStop(1,'rgba(255,230,240,0.9)');
+  ctx.beginPath();
+  ctx.arc(0,0,s*0.28,0,Math.PI*2);
+  ctx.fillStyle=cg;
+  ctx.fill();
+  for(let i=0;i<12;i++){
+    const a=i*Math.PI/6;
+    const len2=s*0.48;
+    ctx.beginPath();
+    ctx.moveTo(Math.cos(a)*s*0.12,Math.sin(a)*s*0.12);
+    ctx.lineTo(Math.cos(a)*len2,Math.sin(a)*len2);
+    ctx.strokeStyle='rgba(160,50,90,0.7)';
+    ctx.lineWidth=s*0.055;
+    ctx.lineCap='round';
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(Math.cos(a)*len2,Math.sin(a)*len2,s*0.065,0,Math.PI*2);
+    ctx.fillStyle='rgba(140,35,75,0.8)';
+    ctx.fill();
   }
-  g.position.set(x,y,z);
-  g.scale.set(0,0,0);
-  return g;
+  ctx.restore();
 }
 
-/* Build scene */
-const trunkMesh=mkBranch(-3,-3,0,0,0,0,0.04,0.18,0x5c2e0e);
-scene.add(trunkMesh);
-
-const branchDefs=[
-  [-3,-3,0,0,0,0,0.04,0.18,0x5c2e0e],
-  [0,0,0,2,1,0.5,0.02,0.08,0x7a4020],
-  [0,0,0,-1,1.5,0.3,0.02,0.07,0x7a4020],
-  [0,0,0,1,2,0.2,0.015,0.06,0x9a5530],
-  [2,1,0.5,3.5,1.5,0.8,0.008,0.035,0x9a5530],
-  [-1,1.5,0.3,-2.5,2.5,0.5,0.008,0.03,0x9a5530],
-];
-const branchMeshes=branchDefs.map(d=>{const m=mkBranch(...d);scene.add(m);return m;});
-
-const flowerDefs=[
-  [2,1,0.5],[2.5,1.2,0.6],[1.8,0.8,0.4],
-  [-1,1.5,0.3],[-1.5,2,0.4],[-0.8,1.8,0.2],
-  [1,2,0.2],[0.8,1.8,0.3],[1.2,2.2,0.1],
-  [3.5,1.5,0.8],[3.2,1.3,0.7],
-  [-2.5,2.5,0.5],[-2.2,2.3,0.4],
-  [0,0,0],[0.3,0.2,0.1],[-0.2,0.3,0.0],
-];
-const flowerMeshes=flowerDefs.map(p=>{const f=mkFlower(...p);scene.add(f);return f;});
-
-/* Animation loop */
-const clock=new THREE.Clock();
-function animate(){
-  requestAnimationFrame(animate);
-  const t=clock.getElapsedTime();
-  const progress=Math.min(t/3,1);
-
-  /* Branches grow */
-  branchMeshes.forEach((m,i)=>{
-    const bp=Math.max(0,Math.min(1,(progress-i*0.08)/0.5));
-    m.scale.y=bp;
-  });
-
-  /* Flowers bloom after branches */
-  flowerMeshes.forEach((f,i)=>{
-    const fp=Math.max(0,(progress-0.5-i*0.025)/0.15);
-    const s=Math.min(fp,1);
-    f.scale.set(s,s,s);
-    f.rotation.z=Math.sin(t*1.5+i)*0.05;
-    f.rotation.x=Math.sin(t*0.8+i*0.7)*0.03;
-  });
-
-  renderer.render(scene,camera);
+function drawBud(x,y,size){
+  ctx.save();
+  ctx.translate(x,y);
+  ctx.beginPath();
+  ctx.ellipse(0,0,size*0.35,size*0.7,0,0,Math.PI*2);
+  const bg=ctx.createLinearGradient(0,-size*0.7,0,size*0.7);
+  bg.addColorStop(0,'rgba(230,90,120,0.9)');
+  bg.addColorStop(1,'rgba(200,60,90,0.8)');
+  ctx.fillStyle=bg;
+  ctx.fill();
+  ctx.beginPath();
+  ctx.ellipse(0,size*0.4,size*0.15,size*0.3,-0.3,0,Math.PI*2);
+  ctx.fillStyle='rgba(80,100,40,0.6)';
+  ctx.fill();
+  ctx.restore();
 }
-animate();
 
-window.addEventListener('resize',()=>{
-  const w=container.offsetWidth,h=container.offsetHeight;
-  camera.aspect=w/h;camera.updateProjectionMatrix();
-  renderer.setSize(w,h);
+const W=canvas.width, H=canvas.height;
+const tree = {
+  main:{x1:W*0.02,y1:H*0.98,x2:W*0.55,y2:H*0.15,w:14},
+  branches:[
+    {x1:W*0.3,y1:H*0.55,x2:W*0.72,y2:H*0.28,w:8,delay:0.3},
+    {x1:W*0.18,y1:H*0.72,x2:W*0.08,y2:H*0.45,w:6,delay:0.25},
+    {x1:W*0.55,y1:H*0.15,x2:W*0.68,y2:H*0.05,w:4,delay:0.65},
+    {x1:W*0.55,y1:H*0.15,x2:W*0.42,y2:H*0.04,w:4,delay:0.7},
+    {x1:W*0.72,y1:H*0.28,x2:W*0.85,y2:H*0.18,w:3.5,delay:0.55},
+    {x1:W*0.72,y1:H*0.28,x2:W*0.78,y2:H*0.12,w:3,delay:0.6},
+    {x1:W*0.3,y1:H*0.55,x2:W*0.45,y2:H*0.42,w:5,delay:0.4},
+  ],
+  clusters:[
+    {cx:W*0.55,cy:H*0.15,count:6,size:16,delay:0.65},
+    {cx:W*0.50,cy:H*0.12,count:4,size:13,delay:0.68},
+    {cx:W*0.72,cy:H*0.28,count:5,size:15,delay:0.55},
+    {cx:W*0.68,cy:H*0.05,count:4,size:12,delay:0.7},
+    {cx:W*0.42,cy:H*0.04,count:5,size:14,delay:0.72},
+    {cx:W*0.85,cy:H*0.18,count:4,size:12,delay:0.6},
+    {cx:W*0.78,cy:H*0.12,count:3,size:11,delay:0.65},
+    {cx:W*0.30,cy:H*0.55,count:4,size:13,delay:0.35},
+    {cx:W*0.45,cy:H*0.42,count:5,size:14,delay:0.42},
+    {cx:W*0.08,cy:H*0.45,count:4,size:12,delay:0.3},
+    {cx:W*0.18,cy:H*0.72,count:3,size:11,delay:0.28},
+  ]
+};
+
+function getFlowerOffsets(count){
+  const o=[];
+  /* Use seeded pseudo-random for consistent positions */
+  let seed=count*7+13;
+  function rnd(){seed=(seed*16807)%2147483647;return(seed-1)/2147483646;}
+  for(let i=0;i<count;i++){
+    o.push({dx:(rnd()-0.5)*40,dy:(rnd()-0.5)*35,rot:rnd()*Math.PI*2,size:0.85+rnd()*0.3});
+  }
+  return o;
+}
+tree.clusters.forEach(function(c){c.offsets=getFlowerOffsets(c.count);});
+
+let prog=0, windT=0;
+
+function render(){
+  ctx.clearRect(0,0,W,H);
+  drawBranch(tree.main.x1,tree.main.y1,tree.main.x2,tree.main.y2,tree.main.w,Math.min(prog*1.2,1));
+  tree.branches.forEach(function(b){
+    var bp=Math.max(0,(prog-b.delay)/0.35);
+    drawBranch(b.x1,b.y1,b.x2,b.y2,b.w,Math.min(bp,1));
+  });
+  tree.clusters.forEach(function(c){
+    var cp=Math.max(0,(prog-c.delay)/0.08);
+    c.offsets.forEach(function(o,i){
+      var fp=Math.max(0,(cp-i*0.15));
+      var wind=Math.sin(windT+i*0.8)*0.04;
+      if(fp>0.5){
+        drawSakuraFlower(c.cx+o.dx,c.cy+o.dy,c.size*o.size,Math.min(fp,1),o.rot+wind);
+      } else if(fp>0){
+        drawBud(c.cx+o.dx,c.cy+o.dy,c.size*o.size*Math.min(fp*2,1));
+      }
+    });
+  });
+}
+
+function loop(){
+  requestAnimationFrame(loop);
+  windT+=0.018;
+  if(prog<1) prog=Math.min(prog+0.006,1);
+  render();
+}
+loop();
+
+window.addEventListener('resize',function(){
+  canvas.width=hero.offsetWidth||window.innerWidth;
+  canvas.height=hero.offsetHeight||window.innerHeight;
 });
 })();
 
