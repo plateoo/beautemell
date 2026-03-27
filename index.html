@@ -14,7 +14,7 @@ html{scroll-behavior:smooth;}
 body{font-family:'Jost',sans-serif;font-weight:300;background:var(--cream);color:var(--text);overflow-x:hidden;}
 
 /* ═══ CANVAS ═══ */
-#sakura-canvas{position:fixed;left:0;top:0;width:100vw;height:100vh;z-index:2;pointer-events:none;opacity:.85;}
+#sakura-canvas{position:fixed;left:0;top:0;width:100vw;height:100vh;z-index:5;pointer-events:none;}
 
 /* ═══ NAV ═══ */
 nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:18px 60px;display:flex;align-items:center;justify-content:space-between;transition:background .4s,box-shadow .4s;}
@@ -35,19 +35,19 @@ h2{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(2rem
 .rv-d1{transition-delay:.1s;}.rv-d2{transition-delay:.2s;}.rv-d3{transition-delay:.3s;}.rv-d4{transition-delay:.4s;}
 
 /* ═══ HERO ═══ */
-#hero{min-height:100vh;display:flex;align-items:center;padding-top:80px;background:linear-gradient(135deg,rgba(255,245,247,.88) 0%,rgba(255,251,252,.82) 60%,rgba(255,248,240,.80) 100%);overflow:hidden;}
-.hero-content{max-width:680px;position:relative;z-index:2;}
+#hero{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:120px 60px 80px;background:linear-gradient(135deg,rgba(255,245,247,.88) 0%,rgba(255,251,252,.82) 60%,rgba(255,248,240,.80) 100%);overflow:hidden;text-align:center;}
+.hero-content{max-width:700px;position:relative;z-index:2;margin:0 auto;}
 .hero-eyebrow{font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;}
 .hero-title{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(3.5rem,8vw,6rem);font-weight:300;line-height:1.0;color:var(--dark);margin-bottom:16px;}
 .hero-title span{color:var(--rose);}
 .hero-sub{font-size:1rem;letter-spacing:.3em;color:var(--muted);text-transform:uppercase;margin-bottom:28px;}
-.hero-tagline{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.15rem;color:var(--text);opacity:.8;margin-bottom:40px;max-width:420px;line-height:1.6;}
-.hero-btns{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:52px;}
+.hero-tagline{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.15rem;color:var(--text);opacity:.8;margin-bottom:40px;max-width:480px;line-height:1.6;margin-left:auto;margin-right:auto;}
+.hero-btns{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:52px;justify-content:center;}
 .btn-primary{background:var(--rose);color:#fff;padding:14px 34px;border-radius:50px;border:none;font-family:'Jost',sans-serif;font-size:.82rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;text-decoration:none;display:inline-block;transition:all .3s;}
 .btn-primary:hover{background:var(--brown);transform:translateY(-2px);box-shadow:0 8px 24px rgba(224,120,152,.3);}
 .btn-outline{background:transparent;color:var(--rose);padding:13px 34px;border-radius:50px;border:1.5px solid var(--rose);font-family:'Jost',sans-serif;font-size:.82rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;text-decoration:none;display:inline-block;transition:all .3s;}
 .btn-outline:hover{background:var(--rose);color:#fff;transform:translateY(-2px);}
-.hero-stats{display:flex;gap:40px;}
+.hero-stats{display:flex;gap:40px;justify-content:center;}
 .stat-item{text-align:center;}
 .stat-num{font-family:'Cormorant Garamond',serif;font-size:2rem;color:var(--rose);display:block;line-height:1;}
 .stat-label{font-size:.7rem;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;display:block;margin-top:4px;}
@@ -116,9 +116,17 @@ h2{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(2rem
 .portfolio-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(224,120,152,.85),rgba(212,168,112,.7));display:flex;align-items:flex-end;padding:20px;opacity:0;transition:opacity .35s;}
 .portfolio-item:hover .portfolio-overlay{opacity:1;}
 .portfolio-technique{color:#fff;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;}
-.port-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px;min-height:inherit;padding:40px 20px;}
-.port-placeholder span{font-size:2rem;opacity:.5;}
-.port-placeholder small{font-size:.68rem;letter-spacing:.12em;color:rgba(122,72,40,.5);text-transform:uppercase;}
+.port-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;min-height:inherit;padding:40px 20px;}
+.port-placeholder span{font-size:2.5rem;opacity:.7;}
+.port-placeholder small{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1rem;color:rgba(122,72,40,.7);text-transform:none;}
+.portfolio-item:nth-child(1) .port-placeholder{background:linear-gradient(135deg,#f9c8d4,#f0b0c4);}
+.portfolio-item:nth-child(2) .port-placeholder{background:linear-gradient(135deg,#f5b8c8,#e8a0b5);}
+.portfolio-item:nth-child(3) .port-placeholder{background:linear-gradient(135deg,#f0c0a0,#e8b090);}
+.portfolio-item:nth-child(4) .port-placeholder{background:linear-gradient(135deg,#e0a0b8,#d890a8);}
+.portfolio-item:nth-child(5) .port-placeholder{background:linear-gradient(135deg,#f0d0c8,#e8c0b8);}
+.portfolio-item:nth-child(6) .port-placeholder{background:linear-gradient(135deg,#d8b8c8,#d0a8b8);}
+.portfolio-item:nth-child(7) .port-placeholder{background:linear-gradient(135deg,#e8c8d8,#e0b8c8);}
+.portfolio-item:nth-child(8) .port-placeholder{background:linear-gradient(135deg,#f0d8d0,#e8c8c0);}
 
 /* ═══ RESERVATION ═══ */
 #reservation{background:rgba(255,251,252,.97);}
@@ -132,23 +140,25 @@ h2{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(2rem
 .toggle.on .toggle-knob{transform:translateX(24px);}
 .toggle-text{font-size:.82rem;font-weight:500;color:var(--rose);}
 .mode-badge{margin-left:auto;padding:4px 12px;border-radius:50px;font-size:.7rem;letter-spacing:.08em;background:rgba(249,200,212,.3);color:var(--rose);}
+.booking-left{background:#1a0810;border-radius:20px;padding:28px;}.booking-left .mode-switch{background:rgba(255,255,255,.06);border-color:rgba(232,135,154,.2);}.booking-left .mode-label{color:rgba(255,255,255,.5);}.booking-left .mode-badge{background:rgba(232,135,154,.15);color:#e8879a;}
 .calendar-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
-.cal-nav{background:none;border:none;cursor:pointer;color:var(--rose);font-size:1.2rem;padding:8px;}
-.cal-title{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--dark);text-transform:capitalize;}
+.cal-nav{background:none;border:1px solid rgba(232,135,154,.35);border-radius:8px;cursor:pointer;color:#e8879a;font-size:1.1rem;padding:6px 12px;transition:background .2s;}
+.cal-nav:hover{background:rgba(232,135,154,.12);}
+.cal-title{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.25rem;color:#ffe8e8;text-transform:capitalize;}
 .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;}
-.cal-day-name{text-align:center;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:8px 0;}
-.cal-day{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:50%;font-size:.82rem;cursor:pointer;transition:all .2s;border:none;background:none;color:var(--text);}
-.cal-day:hover:not(.disabled):not(.empty){background:var(--sakura);color:var(--brown);}
-.cal-day.selected{background:var(--rose);color:#fff;}
-.cal-day.today{border:1.5px solid var(--rose);color:var(--rose);font-weight:500;}
-.cal-day.disabled{color:var(--muted);opacity:.4;cursor:not-allowed;}
+.cal-day-name{text-align:center;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.35);padding:8px 0;}
+.cal-day{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:50%;font-size:.82rem;cursor:pointer;transition:all .2s;border:none;background:none;color:rgba(255,255,255,.75);}
+.cal-day:hover:not(.disabled):not(.empty){background:#e07898;color:#fff;}
+.cal-day.selected{background:#e07898;color:#fff;}
+.cal-day.today{border:1.5px solid #e07898;color:#e8879a;font-weight:500;}
+.cal-day.disabled{color:rgba(255,255,255,.2);opacity:1;cursor:not-allowed;}
 .cal-day.empty{cursor:default;}
-.slots-header{font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:28px 0 14px;}
+.slots-header{font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4);margin:28px 0 14px;}
 .slots-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
-.slot{padding:10px 6px;text-align:center;border-radius:10px;background:#fff;border:1.5px solid rgba(249,200,212,.5);font-size:.8rem;cursor:pointer;transition:all .2s;color:var(--text);}
-.slot:hover{border-color:var(--rose);color:var(--rose);}
-.slot.selected{background:var(--rose);border-color:var(--rose);color:#fff;}
-.slot.blocked{background:#f5f5f5;border-color:#e0e0e0;color:#ccc;cursor:not-allowed;}
+.slot{padding:10px 6px;text-align:center;border-radius:10px;background:#2a1020;border:1.5px solid rgba(232,135,154,.3);font-size:.8rem;cursor:pointer;transition:all .2s;color:rgba(255,255,255,.7);}
+.slot:hover{border-color:#e07898;color:#fff;background:rgba(224,120,152,.15);}
+.slot.selected{background:#e07898;border-color:#e07898;color:#fff;}
+.slot.blocked{background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.08);color:rgba(255,255,255,.2);cursor:not-allowed;}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
 .form-group{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;}
 .form-group label{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);}
@@ -344,7 +354,7 @@ footer{background:var(--dark);color:rgba(255,255,255,.7);padding:60px 60px 40px;
   .adm-tabs{flex-wrap:wrap;gap:2px;}
 }
 @media(max-width:600px){
-  #sakura-canvas{opacity:.5;}
+  #sakura-canvas{display:none;}
   section{padding:60px 20px;}
   #tarifs{padding:60px 20px;}
   nav{padding:14px 20px;}
@@ -446,14 +456,14 @@ footer{background:var(--dark);color:rgba(255,255,255,.7);padding:60px 60px 40px;
   <p class="section-label rv">Mes créations</p>
   <h2 class="rv">Portfolio</h2>
   <div class="portfolio-grid" id="portfolioGrid">
-    <div class="portfolio-item rv"><div class="port-placeholder"><span>🌸</span><small>photo-1.jpg</small></div><div class="portfolio-overlay"><span class="portfolio-technique">Gel French Nude</span></div></div>
-    <div class="portfolio-item rv rv-d1"><div class="port-placeholder"><span>💅</span><small>photo-2.jpg</small></div><div class="portfolio-overlay"><span class="portfolio-technique">Nail Art Floral</span></div></div>
-    <div class="portfolio-item rv rv-d2"><div class="port-placeholder"><span>✨</span><small>photo-3.jpg</small></div><div class="portfolio-overlay"><span class="portfolio-technique">Résine Rose Gold</span></div></div>
-    <div class="portfolio-item rv rv-d3"><div class="port-placeholder"><span>🌷</span><small>photo-4.jpg</small></div><div class="portfolio-overlay"><span class="portfolio-technique">VSP Bordeaux</span></div></div>
-    <div class="portfolio-item rv rv-d1"><div class="port-placeholder"><span>🎀</span><small>photo-5.jpg</small></div><div class="portfolio-overlay"><span class="portfolio-technique">Gel Baby Boomer</span></div></div>
-    <div class="portfolio-item rv rv-d2"><div class="port-placeholder"><span>🌺</span><small>photo-6.jpg</small></div><div class="portfolio-overlay"><span class="portfolio-technique">Nail Art Géo</span></div></div>
-    <div class="portfolio-item rv rv-d3"><div class="port-placeholder"><span>💎</span><small>photo-7.jpg</small></div><div class="portfolio-overlay"><span class="portfolio-technique">Chrome Mirror</span></div></div>
-    <div class="portfolio-item rv rv-d4"><div class="port-placeholder"><span>🦋</span><small>photo-8.jpg</small></div><div class="portfolio-overlay"><span class="portfolio-technique">Gel Nude Naturel</span></div></div>
+    <div class="portfolio-item rv"><div class="port-placeholder"><span>🌸</span><small>Gel French Nude</small></div><div class="portfolio-overlay"><span class="portfolio-technique">Gel French Nude</span></div></div>
+    <div class="portfolio-item rv rv-d1"><div class="port-placeholder"><span>💅</span><small>Nail Art Floral</small></div><div class="portfolio-overlay"><span class="portfolio-technique">Nail Art Floral</span></div></div>
+    <div class="portfolio-item rv rv-d2"><div class="port-placeholder"><span>✨</span><small>Résine Rose Gold</small></div><div class="portfolio-overlay"><span class="portfolio-technique">Résine Rose Gold</span></div></div>
+    <div class="portfolio-item rv rv-d3"><div class="port-placeholder"><span>🌷</span><small>VSP Bordeaux</small></div><div class="portfolio-overlay"><span class="portfolio-technique">VSP Bordeaux</span></div></div>
+    <div class="portfolio-item rv rv-d1"><div class="port-placeholder"><span>🎀</span><small>Gel Baby Boomer</small></div><div class="portfolio-overlay"><span class="portfolio-technique">Gel Baby Boomer</span></div></div>
+    <div class="portfolio-item rv rv-d2"><div class="port-placeholder"><span>🌺</span><small>Nail Art Géo</small></div><div class="portfolio-overlay"><span class="portfolio-technique">Nail Art Géo</span></div></div>
+    <div class="portfolio-item rv rv-d3"><div class="port-placeholder"><span>💎</span><small>Chrome Mirror</small></div><div class="portfolio-overlay"><span class="portfolio-technique">Chrome Mirror</span></div></div>
+    <div class="portfolio-item rv rv-d4"><div class="port-placeholder"><span>🦋</span><small>Gel Nude Naturel</small></div><div class="portfolio-overlay"><span class="portfolio-technique">Gel Nude Naturel</span></div></div>
   </div>
 </section>
 
@@ -656,189 +666,182 @@ footer{background:var(--dark);color:rgba(255,255,255,.7);padding:60px 60px 40px;
 
 <script>
 /* ══════════════════════════════════════════════
-   SAKURA CANVAS — branche organique naturelle
+   SAKURA CANVAS — branche OPAQUE, VISIBLE, polygones remplis
 ══════════════════════════════════════════════ */
 (function(){
 const canvas=document.getElementById('sakura-canvas');
 const ctx=canvas.getContext('2d');
-let W,H,progress=0,target=0,t=0;
+let W,H,scrollProgress=0,targetScroll=0,t=0;
 
-/* Segments [x1,y1, cx1,cy1, cx2,cy2, x2,y2, w1,w2, scrollStart,scrollEnd]
-   x: 0→1 (left→right), y: 0→1 (top→bottom) */
+/* Segments: [x1,y1, cx1,cy1, cx2,cy2, x2,y2, w1,w2, t0,t1]
+   x 0→1 left→right, y 0→1 top→bottom. PAS de globalAlpha. */
 const S=[
-  // TRUNK
-  [.07,1.02, .10,.82, .28,.72, .36,.59, 30,21, 0,.22],
-  [.36,.59, .45,.48, .19,.39, .12,.27, 21,14, .18,.40],
-  [.12,.27, .08,.16, .35,.09, .53,.03, 14,7,  .36,.58],
-  // SECONDARY
-  [.28,.67, .50,.60, .66,.51, .75,.44, 14,5,  .14,.36],
-  [.30,.47, .50,.40, .65,.30, .73,.21, 12,4,  .27,.50],
-  [.12,.27, -.02,.21,-.07,.12, .02,.06, 10,3, .37,.57],
-  [.34,.15, .53,.09, .70,.04, .80,.01, 8,2.5, .45,.63],
-  [.53,.03, .63,-.04,.75,.01, .84,-.03, 5,1.5,.55,.70],
-  // TERTIARY
-  [.75,.44, .83,.35, .91,.26, .96,.19, 5,1.5, .32,.51],
-  [.75,.44, .80,.47, .88,.49, .93,.44, 4,1.5, .34,.52],
-  [.73,.21, .81,.13, .88,.08, .93,.04, 4,1.5, .46,.62],
-  [.55,.30, .64,.21, .74,.14, .81,.10, 3.5,1.2,.41,.57],
-  [.02,.06, -.05,.01,-.08,-.03,.00,-.04, 3,1, .53,.65],
-  [.61,.07, .67,.01, .74,.00, .78,.04, 2.5,1, .54,.67],
-  [.80,.01, .85,-.05,.91,-.02,.95,-.05, 2,1,  .62,.74],
+  [.05,1.03, .09,.82, .26,.72, .35,.60, 28,18, 0,.22],
+  [.35,.60, .44,.48, .18,.38, .12,.27, 18,12, .17,.40],
+  [.12,.27, .07,.16, .34,.08, .52,.03, 12,5,  .35,.58],
+  [.27,.68, .48,.60, .65,.50, .74,.44, 12,5,  .14,.36],
+  [.29,.46, .48,.38, .64,.28, .72,.20, 10,4,  .27,.50],
+  [.12,.27, -.01,.21,-.06,.12, .03,.06, 8,3,  .37,.57],
+  [.34,.15, .52,.09, .69,.04, .79,.01, 6,2,   .45,.63],
+  [.52,.03, .62,-.03,.74,.01, .83,-.02, 4,1.5,.55,.70],
+  [.74,.44, .82,.36, .90,.27, .95,.20, 5,1.5, .32,.51],
+  [.74,.44, .79,.47, .87,.49, .92,.45, 4,1.5, .34,.52],
+  [.72,.20, .80,.13, .87,.08, .92,.04, 4,1.5, .46,.62],
+  [.54,.29, .63,.21, .73,.14, .80,.10, 3,1,   .41,.57],
+  [.03,.06, -.04,.01,-.07,-.02,.01,-.04, 2.5,1,.53,.65],
+  [.60,.07, .66,.01, .73,.00, .77,.04, 2.5,1, .54,.67],
 ];
-
-/* Fleur clusters {x,y,r,n,t0,sp,ph,buds} */
 const CL=[
-  {x:.96,y:.19,r:14,n:5,t0:.49,sp:22,ph:0,buds:4},
-  {x:.93,y:.44,r:12,n:4,t0:.50,sp:18,ph:1.2,buds:3},
-  {x:.93,y:.04,r:13,n:5,t0:.60,sp:20,ph:2.4,buds:4},
-  {x:.81,y:.10,r:11,n:4,t0:.55,sp:16,ph:.7,buds:3},
-  {x:.80,y:.01,r:12,n:4,t0:.61,sp:18,ph:1.8,buds:3},
-  {x:.84,y:-.03,r:11,n:4,t0:.68,sp:16,ph:3,buds:3},
-  {x:.00,y:.06,r:10,n:3,t0:.55,sp:14,ph:.5,buds:3},
-  {x:.53,y:.03,r:15,n:6,t0:.56,sp:24,ph:1.5,buds:4},
-  {x:.78,y:.04,r:10,n:3,t0:.65,sp:14,ph:2.1,buds:3},
-  {x:.00,y:-.04,r:9,n:3,t0:.63,sp:12,ph:.9,buds:2},
-  {x:.95,y:-.05,r:10,n:3,t0:.72,sp:14,ph:1.4,buds:3},
+  {x:.95,y:.20,r:15,n:5,t0:.49,sp:22,ph:0,buds:4},
+  {x:.92,y:.45,r:13,n:4,t0:.50,sp:18,ph:1.2,buds:3},
+  {x:.92,y:.04,r:14,n:5,t0:.60,sp:20,ph:2.4,buds:4},
+  {x:.80,y:.10,r:12,n:4,t0:.55,sp:16,ph:.7,buds:3},
+  {x:.79,y:.01,r:13,n:4,t0:.61,sp:18,ph:1.8,buds:3},
+  {x:.83,y:-.02,r:12,n:4,t0:.68,sp:16,ph:3,buds:3},
+  {x:.01,y:.06,r:11,n:3,t0:.55,sp:14,ph:.5,buds:3},
+  {x:.52,y:.03,r:16,n:6,t0:.56,sp:24,ph:1.5,buds:4},
+  {x:.77,y:.04,r:11,n:3,t0:.65,sp:14,ph:2.1,buds:3},
+  {x:.01,y:-.04,r:10,n:3,t0:.63,sp:12,ph:.9,buds:2},
 ];
 
 function resize(){W=canvas.width=innerWidth;H=canvas.height=innerHeight;}
 
+/* Point on cubic bezier */
 function bp(x1,y1,cx1,cy1,cx2,cy2,x2,y2,tt){
   const m=1-tt;
   return[m*m*m*x1+3*m*m*tt*cx1+3*m*tt*tt*cx2+tt*tt*tt*x2,
          m*m*m*y1+3*m*m*tt*cy1+3*m*tt*tt*cy2+tt*tt*tt*y2];
 }
 
-/* Couleur bois par épaisseur */
-function wCol(w,hi){
-  if(hi){
-    if(w>18) return 'rgba(130,75,35,.55)';
-    if(w>10) return 'rgba(155,95,50,.45)';
-    if(w>5)  return 'rgba(175,115,65,.40)';
-    return 'rgba(190,135,80,.35)';
-  }
-  if(w>20) return '#5c2e0e';
-  if(w>13) return '#6b3a1f';
-  if(w>8)  return '#7a4020';
-  if(w>4)  return '#9a6035';
-  return '#b07a48';
-}
-
-/* Dessiner un segment avec texture bois (2 passes) */
-function drawSeg(seg,prog){
+/* ── BRANCH: filled polygon (NOT stroke) ── */
+function drawBranch(seg,prog){
   if(prog<=0)return;
+  prog=Math.min(1,prog);
   const[x1n,y1n,cx1n,cy1n,cx2n,cy2n,x2n,y2n,w1,w2]=seg;
   const x1=x1n*W,y1=y1n*H,cx1=cx1n*W,cy1=cy1n*H,cx2=cx2n*W,cy2=cy2n*H,x2=x2n*W,y2=y2n*H;
-  const N=24,max=Math.ceil(N*Math.min(1,prog));
-  for(let i=0;i<max;i++){
-    const t0=i/N,t1=Math.min((i+1)/N,prog);
-    const[ax,ay]=bp(x1,y1,cx1,cy1,cx2,cy2,x2,y2,t0);
-    const[bx,by]=bp(x1,y1,cx1,cy1,cx2,cy2,x2,y2,t1);
-    const w=w1+(w2-w1)*((t0+t1)/2);
-    /* Pass 1: base */
-    ctx.beginPath();ctx.moveTo(ax,ay);ctx.lineTo(bx,by);
-    ctx.strokeStyle=wCol(w,false);ctx.lineWidth=Math.max(1.5,w);ctx.lineCap='round';ctx.stroke();
-    /* Pass 2: highlight décalé */
-    const dx=bx-ax,dy=by-ay,len=Math.sqrt(dx*dx+dy*dy)||1;
-    const nx=-dy/len*1.8,ny=dx/len*1.8;
-    ctx.beginPath();ctx.moveTo(ax+nx,ay+ny);ctx.lineTo(bx+nx,by+ny);
-    ctx.strokeStyle=wCol(w,true);ctx.lineWidth=Math.max(1,w*.42);ctx.lineCap='round';ctx.stroke();
+  const N=28;
+  const maxI=Math.floor(N*prog);
+  if(maxI<1)return;
+  /* Build left/right outlines */
+  const left=[],right=[];
+  for(let i=0;i<=maxI;i++){
+    const tt=i/N;
+    const[px,py]=bp(x1,y1,cx1,cy1,cx2,cy2,x2,y2,tt);
+    const tt2=Math.min(1,(i+1)/N);
+    const[px2,py2]=bp(x1,y1,cx1,cy1,cx2,cy2,x2,y2,tt2);
+    const dx=px2-px,dy=py2-py;
+    const len=Math.sqrt(dx*dx+dy*dy)||1;
+    const nx=-dy/len,ny=dx/len;
+    const w=(w1+(w2-w1)*tt)/2;
+    left.push([px+nx*w,py+ny*w]);
+    right.push([px-nx*w,py-ny*w]);
   }
+  /* Draw filled polygon */
+  ctx.beginPath();
+  ctx.moveTo(left[0][0],left[0][1]);
+  for(let i=1;i<left.length;i++) ctx.lineTo(left[i][0],left[i][1]);
+  for(let i=right.length-1;i>=0;i--) ctx.lineTo(right[i][0],right[i][1]);
+  ctx.closePath();
+  ctx.fillStyle='#5c2e0e';
+  ctx.fill();
+  /* Highlight overlay (lighter, narrower, offset) */
+  const hl=[],hr=[];
+  for(let i=0;i<=maxI;i++){
+    const tt=i/N;
+    const[px,py]=bp(x1,y1,cx1,cy1,cx2,cy2,x2,y2,tt);
+    const tt2=Math.min(1,(i+1)/N);
+    const[px2,py2]=bp(x1,y1,cx1,cy1,cx2,cy2,x2,y2,tt2);
+    const dx=px2-px,dy=py2-py;
+    const len=Math.sqrt(dx*dx+dy*dy)||1;
+    const nx=-dy/len,ny=dx/len;
+    const w=(w1+(w2-w1)*tt)/2*.4;
+    hl.push([px+nx*w+1.5,py+ny*w+1.5]);
+    hr.push([px-nx*w+1.5,py-ny*w+1.5]);
+  }
+  ctx.beginPath();
+  ctx.moveTo(hl[0][0],hl[0][1]);
+  for(let i=1;i<hl.length;i++) ctx.lineTo(hl[i][0],hl[i][1]);
+  for(let i=hr.length-1;i>=0;i--) ctx.lineTo(hr[i][0],hr[i][1]);
+  ctx.closePath();
+  ctx.fillStyle='rgba(139,74,40,.4)';
+  ctx.fill();
 }
 
-/* Pétale réaliste */
-function drawPetal(L,op){
-  const Pw=L*.78;
-  const gr=ctx.createLinearGradient(0,-L*.1,0,-L);
-  gr.addColorStop(0,'rgba(255,245,247,.96)');
-  gr.addColorStop(.3,'rgba(253,208,220,.92)');
-  gr.addColorStop(.7,'rgba(245,168,192,.87)');
-  gr.addColorStop(1,'rgba(238,148,175,.83)');
-  ctx.save();ctx.scale(op,op);
-  ctx.beginPath();ctx.moveTo(0,0);
-  ctx.bezierCurveTo(-Pw*.9,-L*.17,-Pw*1.06,-L*.56,-Pw*.14,-L);
-  ctx.bezierCurveTo(-Pw*.04,-L*1.06,Pw*.04,-L*1.06,Pw*.14,-L);
-  ctx.bezierCurveTo(Pw*1.06,-L*.56,Pw*.9,-L*.17,0,0);
-  ctx.fillStyle=gr;ctx.fill();
-  /* Veine */
-  ctx.beginPath();ctx.moveTo(0,-L*.06);ctx.quadraticCurveTo(Pw*.04,-L*.5,Pw*.02,-L*.93);
-  ctx.strokeStyle='rgba(210,130,160,.15)';ctx.lineWidth=.7;ctx.stroke();
-  /* Veines latérales */
-  for(let v=0;v<3;v++){
-    const vy=-.25*L-v*.2*L;
-    ctx.beginPath();ctx.moveTo(0,vy);ctx.lineTo(Pw*.38+v*3,vy-L*.05);ctx.moveTo(0,vy);ctx.lineTo(-Pw*.35-v*2,vy-L*.04);
-    ctx.strokeStyle='rgba(210,130,160,.10)';ctx.lineWidth=.4;ctx.stroke();
+/* ── FLOWER: opaque filled petals ── */
+function drawFlower(cx,cy,radius,openProg){
+  if(openProg<=0)return;
+  /* Bourgeon */
+  if(openProg<.3){
+    const bf=openProg/.3;
+    ctx.beginPath();
+    ctx.ellipse(cx,cy,radius*.25*bf,radius*.42*bf,0,0,Math.PI*2);
+    ctx.fillStyle='#d85070';
+    ctx.fill();
+    return;
+  }
+  /* Pétales */
+  const op=Math.min(1,(openProg-.2)/.6);
+  ctx.save();
+  ctx.translate(cx,cy);
+  ctx.scale(op,op);
+  for(let i=0;i<5;i++){
+    const a=(i*Math.PI*2/5)-Math.PI/2+Math.sin(t*.7)*0.04;
+    ctx.save();
+    ctx.rotate(a);
+    const L=radius,Pw=L*.82;
+    ctx.beginPath();
+    ctx.moveTo(0,0);
+    ctx.bezierCurveTo(-Pw*.85,-L*.18,-Pw*1.08,-L*.58,-Pw*.12,-L);
+    ctx.bezierCurveTo(-Pw*.03,-L*1.05,Pw*.03,-L*1.05,Pw*.12,-L);
+    ctx.bezierCurveTo(Pw*1.08,-L*.58,Pw*.85,-L*.18,0,0);
+    ctx.fillStyle='#f9c8d4';
+    ctx.fill();
+    /* Vein */
+    ctx.beginPath();ctx.moveTo(0,-L*.08);ctx.quadraticCurveTo(Pw*.04,-L*.5,0,-L*.95);
+    ctx.strokeStyle='rgba(200,100,130,.15)';ctx.lineWidth=.6;ctx.stroke();
+    ctx.restore();
   }
   ctx.restore();
-}
-
-/* Fleur complète */
-function drawFlower(cx,cy,radius,openness,windRot){
-  if(openness<=.01)return;
-  if(openness<.32){
-    /* Bourgeon */
-    const bf=openness/.32;
-    ctx.save();ctx.translate(cx,cy);ctx.rotate(windRot);
-    ctx.beginPath();ctx.ellipse(0,0,radius*.25*bf,radius*.4*bf,0,0,Math.PI*2);
-    const bg=ctx.createRadialGradient(0,0,0,0,0,radius*.4*bf);
-    bg.addColorStop(0,'rgba(232,96,122,'+bf+')');bg.addColorStop(1,'rgba(180,50,80,'+(bf*.8)+')');
-    ctx.fillStyle=bg;ctx.fill();
-    ctx.restore();return;
-  }
-  const op=Math.min(1,(openness-.18)/.55);
-  for(let i=0;i<5;i++){
-    const a=(i*Math.PI*2/5)-Math.PI/2+windRot;
-    ctx.save();ctx.translate(cx,cy);ctx.rotate(a);
-    drawPetal(radius,op);ctx.restore();
-  }
-  /* Centre crème */
-  const cg=ctx.createRadialGradient(cx,cy,0,cx,cy,radius*.3*op);
-  cg.addColorStop(0,'rgba(255,248,249,'+op+')');cg.addColorStop(1,'rgba(255,235,240,'+(op*.6)+')');
-  ctx.beginPath();ctx.arc(cx,cy,radius*.3*op,0,Math.PI*2);ctx.fillStyle=cg;ctx.fill();
-  /* 12 étamines */
+  /* Centre blanc */
+  ctx.beginPath();ctx.arc(cx,cy,radius*.28*op,0,Math.PI*2);
+  ctx.fillStyle='#fff8f9';ctx.fill();
+  /* 12 étamines bordeaux */
   for(let i=0;i<12;i++){
-    const a=i*Math.PI*2/12+windRot*.4;
-    const sL=radius*.38*op;
-    const sx=cx+Math.cos(a)*sL*.22,sy=cy+Math.sin(a)*sL*.22;
+    const a=i*Math.PI*2/12;
+    const sL=radius*.35*op;
     const ex=cx+Math.cos(a)*sL,ey=cy+Math.sin(a)*sL;
-    ctx.beginPath();ctx.moveTo(sx,sy);ctx.lineTo(ex,ey);
-    ctx.strokeStyle='rgba(139,32,80,'+(op*.85)+')';ctx.lineWidth=.8;ctx.stroke();
+    ctx.beginPath();ctx.moveTo(cx+Math.cos(a)*sL*.3,cy+Math.sin(a)*sL*.3);ctx.lineTo(ex,ey);
+    ctx.strokeStyle='#8b2050';ctx.lineWidth=.9;ctx.stroke();
     ctx.beginPath();ctx.arc(ex,ey,1.6,0,Math.PI*2);
-    ctx.fillStyle='rgba(139,32,80,'+op+')';ctx.fill();
+    ctx.fillStyle='#8b2050';ctx.fill();
   }
 }
 
-/* Bouton floral */
+/* ── BUD ── */
 function drawBud(cx,cy,r,prog,rot){
   if(prog<=0)return;
   ctx.save();ctx.translate(cx,cy);ctx.rotate(rot);
   const s=r*prog;
   ctx.beginPath();ctx.ellipse(0,0,s*.35,s*.65,0,0,Math.PI*2);
-  const g=ctx.createLinearGradient(0,-s*.6,0,s*.6);
-  g.addColorStop(0,'rgba(232,96,122,.9)');g.addColorStop(1,'rgba(192,64,96,.85)');
-  ctx.fillStyle=g;ctx.fill();
-  /* Petit calice vert-brun */
-  ctx.beginPath();ctx.moveTo(-s*.25,s*.4);ctx.quadraticCurveTo(0,s*.25,s*.25,s*.4);
-  ctx.quadraticCurveTo(0,s*.6,-s*.25,s*.4);
-  ctx.fillStyle='rgba(100,80,50,.5)';ctx.fill();
+  ctx.fillStyle='#e06080';ctx.fill();
+  ctx.beginPath();ctx.moveTo(-s*.22,s*.38);ctx.quadraticCurveTo(0,s*.22,s*.22,s*.38);ctx.quadraticCurveTo(0,s*.55,-s*.22,s*.38);
+  ctx.fillStyle='rgba(90,60,40,.6)';ctx.fill();
   ctx.restore();
 }
 
-/* Cluster */
+/* ── CLUSTER ── */
 function drawCluster(c,prog){
   const cp=Math.max(0,Math.min(1,(prog-c.t0)/.14));
   if(cp<=0)return;
-  const wind=Math.sin(t*.65+c.ph)*.06;
-  /* Fleurs avec délai en cascade */
+  const wind=Math.sin(t*.65+c.ph)*.05;
   for(let i=0;i<c.n;i++){
     const a=(i/c.n)*Math.PI*2+c.ph*.7;
     const d=i===0?0:c.sp*(.5+i*.2);
     const fx=c.x*W+Math.cos(a)*d,fy=c.y*H+Math.sin(a)*d*.6;
     const delay=i*.04;
     const fo=Math.max(0,Math.min(1,(cp-delay)/.16));
-    drawFlower(fx,fy,c.r*(.82+i*.06),fo,wind+i*.28);
+    drawFlower(fx,fy,c.r*(.85+i*.05),fo);
   }
-  /* Boutons */
   for(let i=0;i<c.buds;i++){
     const ba=(i/c.buds)*Math.PI*2+c.ph+1.2;
     const bd=c.sp*(1.1+i*.25);
@@ -848,23 +851,27 @@ function drawCluster(c,prog){
   }
 }
 
+/* ── FRAME ── */
 function draw(){
   ctx.clearRect(0,0,W,H);
+  /* NO globalAlpha — each element handles its own opacity */
   S.forEach(seg=>{
-    const sp=(progress-seg[10])/(seg[11]-seg[10]);
-    drawSeg(seg,sp);
+    const sp=(scrollProgress-seg[10])/(seg[11]-seg[10]);
+    drawBranch(seg,sp);
   });
-  CL.forEach(c=>drawCluster(c,progress));
+  CL.forEach(c=>drawCluster(c,scrollProgress));
 }
 
 function animate(){
   t+=.016;
-  progress+=(target-progress)*.055;
+  scrollProgress+=(targetScroll-scrollProgress)*.055;
   draw();
   requestAnimationFrame(animate);
 }
 
-addEventListener('scroll',()=>{target=Math.min(1,scrollY/Math.max(1,document.body.scrollHeight-innerHeight));},{passive:true});
+addEventListener('scroll',()=>{
+  targetScroll=Math.min(1,window.scrollY/Math.max(1,document.body.scrollHeight-window.innerHeight));
+},{passive:true});
 addEventListener('resize',resize);
 resize();animate();
 })();
