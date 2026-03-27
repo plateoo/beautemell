@@ -1,0 +1,1612 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beauté Mell — Onglerie à Saint-Georges, Liège</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400;1,600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --sakura: #f9c8d4;
+  --rose: #e07898;
+  --gold: #d4a870;
+  --cream: #fffbfc;
+  --brown: #7a4828;
+  --dark: #2a1a1a;
+  --text: #4a3030;
+  --muted: #9a7878;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Jost', sans-serif;
+  font-weight: 300;
+  background: var(--cream);
+  color: var(--text);
+  overflow-x: hidden;
+}
+
+/* ═══ CANVAS ═══ */
+#sakura-canvas {
+  position: fixed;
+  left: 0; top: 0;
+  width: 140px; height: 100vh;
+  z-index: 15;
+  pointer-events: none;
+}
+
+/* ═══ NAV ═══ */
+nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 18px 60px 18px 160px;
+  display: flex; align-items: center; justify-content: space-between;
+  transition: background 0.4s, box-shadow 0.4s;
+}
+nav.scrolled {
+  background: rgba(255,251,252,0.96);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 20px rgba(224,120,152,0.08);
+}
+.nav-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1.5rem;
+  color: var(--rose);
+  letter-spacing: 0.02em;
+}
+.nav-links { display: flex; gap: 32px; list-style: none; }
+.nav-links a {
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.nav-links a:hover { color: var(--rose); }
+.nav-cta {
+  background: var(--rose);
+  color: white;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 50px;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.3s, transform 0.2s;
+}
+.nav-cta:hover { background: var(--brown); transform: translateY(-1px); }
+
+/* ═══ SECTIONS ═══ */
+section { padding: 100px 60px 100px 180px; position: relative; }
+.section-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--rose);
+  margin-bottom: 12px;
+}
+h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 300;
+  color: var(--dark);
+  line-height: 1.2;
+  margin-bottom: 40px;
+}
+
+/* ═══ SCROLL REVEAL ═══ */
+.rv {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.rv.visible { opacity: 1; transform: translateY(0); }
+.rv-delay-1 { transition-delay: 0.1s; }
+.rv-delay-2 { transition-delay: 0.2s; }
+.rv-delay-3 { transition-delay: 0.3s; }
+.rv-delay-4 { transition-delay: 0.4s; }
+
+/* ═══ HERO ═══ */
+#hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding-top: 80px;
+  background: linear-gradient(135deg, #fff5f7 0%, var(--cream) 60%, #fff8f0 100%);
+  overflow: hidden;
+}
+.hero-content { max-width: 680px; position: relative; z-index: 2; }
+.hero-eyebrow {
+  font-size: 0.72rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 20px;
+}
+.hero-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(3.5rem, 8vw, 6rem);
+  font-weight: 300;
+  line-height: 1.0;
+  color: var(--dark);
+  margin-bottom: 16px;
+}
+.hero-title span { color: var(--rose); }
+.hero-sub {
+  font-size: 1rem;
+  letter-spacing: 0.3em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 28px;
+}
+.hero-tagline {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1.15rem;
+  color: var(--text);
+  opacity: 0.8;
+  margin-bottom: 40px;
+  max-width: 420px;
+  line-height: 1.6;
+}
+.hero-btns { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 52px; }
+.btn-primary {
+  background: var(--rose);
+  color: white;
+  padding: 14px 34px;
+  border-radius: 50px;
+  border: none;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.82rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.3s;
+}
+.btn-primary:hover { background: var(--brown); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(224,120,152,0.3); }
+.btn-outline {
+  background: transparent;
+  color: var(--rose);
+  padding: 13px 34px;
+  border-radius: 50px;
+  border: 1.5px solid var(--rose);
+  font-family: 'Jost', sans-serif;
+  font-size: 0.82rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.3s;
+}
+.btn-outline:hover { background: var(--rose); color: white; transform: translateY(-2px); }
+.hero-stats { display: flex; gap: 40px; }
+.stat-item { text-align: center; }
+.stat-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem;
+  color: var(--rose);
+  display: block;
+  line-height: 1;
+}
+.stat-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  text-transform: uppercase;
+  display: block;
+  margin-top: 4px;
+}
+.hero-deco {
+  position: absolute;
+  right: -60px; top: 50%;
+  transform: translateY(-50%);
+  width: 400px; height: 400px;
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  background: linear-gradient(135deg, rgba(249,200,212,0.25), rgba(212,168,112,0.15));
+  z-index: 1;
+  animation: morphBlob 8s ease-in-out infinite;
+}
+@keyframes morphBlob {
+  0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+  50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+}
+
+/* ═══ À PROPOS ═══ */
+#apropos { background: white; }
+.apropos-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+.apropos-photos { position: relative; display: flex; justify-content: center; }
+.photo-main {
+  width: 300px; height: 380px;
+  border-radius: 60% 40% 55% 45% / 45% 55% 45% 55%;
+  background: linear-gradient(135deg, var(--sakura) 0%, #f0b8c8 100%);
+  overflow: hidden;
+  position: relative;
+  flex-shrink: 0;
+}
+.photo-main img { width: 100%; height: 100%; object-fit: cover; }
+.photo-placeholder {
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 8px;
+  color: rgba(255,255,255,0.7);
+  font-size: 0.75rem; letter-spacing: 0.1em;
+}
+.photo-placeholder span { font-size: 2rem; }
+.photo-mini {
+  position: absolute;
+  bottom: -20px; right: -20px;
+  width: 100px; height: 100px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold) 0%, #e8c090 100%);
+  border: 4px solid white;
+  overflow: hidden;
+}
+.photo-mini img { width: 100%; height: 100%; object-fit: cover; }
+.bio-text {
+  font-size: 0.95rem;
+  line-height: 1.9;
+  color: var(--text);
+  margin-bottom: 28px;
+}
+.bio-quote {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1.2rem;
+  color: var(--rose);
+  border-left: 2px solid var(--sakura);
+  padding-left: 20px;
+  margin: 28px 0;
+  line-height: 1.6;
+}
+.bio-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+.tag {
+  padding: 6px 16px;
+  border-radius: 50px;
+  background: var(--sakura);
+  color: var(--brown);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+}
+
+/* ═══ SERVICES ═══ */
+#services { background: var(--cream); }
+.services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.service-card {
+  background: white;
+  border-radius: 20px;
+  padding: 36px 28px;
+  position: relative;
+  overflow: hidden;
+  cursor: default;
+  transition: transform 0.3s, box-shadow 0.3s;
+  border: 1px solid rgba(249,200,212,0.3);
+}
+.service-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--rose), var(--gold));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+}
+.service-card:hover::before { transform: scaleX(1); }
+.service-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(224,120,152,0.12); }
+.service-sakura {
+  position: absolute;
+  top: 12px; right: 12px;
+  opacity: 0;
+  transition: opacity 0.4s;
+  font-size: 1.4rem;
+}
+.service-card:hover .service-sakura { opacity: 1; }
+.service-icon {
+  width: 48px; height: 48px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--sakura), #f0b0c4);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem;
+  margin-bottom: 20px;
+}
+.service-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3rem;
+  font-style: italic;
+  color: var(--dark);
+  margin-bottom: 10px;
+}
+.service-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.7; }
+.service-price {
+  margin-top: 20px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem;
+  color: var(--rose);
+}
+
+/* ═══ PORTFOLIO ═══ */
+#portfolio { background: white; }
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1.5fr;
+  grid-template-rows: auto auto;
+  gap: 16px;
+}
+.portfolio-item {
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  background: linear-gradient(135deg, var(--sakura), #f0b8c8);
+  cursor: pointer;
+}
+.portfolio-item:nth-child(1) { grid-row: span 2; min-height: 480px; }
+.portfolio-item:nth-child(2), .portfolio-item:nth-child(3) { min-height: 220px; }
+.portfolio-item:nth-child(4) { grid-column: span 2; min-height: 220px; }
+.portfolio-item:nth-child(5), .portfolio-item:nth-child(6), .portfolio-item:nth-child(7), .portfolio-item:nth-child(8) { min-height: 220px; }
+.portfolio-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(224,120,152,0.85), rgba(212,168,112,0.7));
+  display: flex; align-items: flex-end;
+  padding: 20px;
+  opacity: 0;
+  transition: opacity 0.35s;
+}
+.portfolio-item:hover .portfolio-overlay { opacity: 1; }
+.portfolio-technique {
+  color: white;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1.1rem;
+}
+.port-placeholder {
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 6px;
+  min-height: inherit;
+  padding: 40px 20px;
+}
+.port-placeholder span { font-size: 2rem; opacity: 0.5; }
+.port-placeholder small {
+  font-size: 0.68rem; letter-spacing: 0.12em;
+  color: rgba(122,72,40,0.5); text-transform: uppercase;
+}
+
+/* ═══ RÉSERVATION ═══ */
+#reservation { background: var(--cream); }
+.booking-container { display: grid; grid-template-columns: 1fr 1.2fr; gap: 60px; }
+.booking-left { }
+.booking-right { }
+
+/* Mode Switch */
+.mode-switch {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 32px;
+  background: white;
+  padding: 16px 20px;
+  border-radius: 16px;
+  border: 1px solid rgba(249,200,212,0.4);
+}
+.mode-label { font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.toggle-wrap { position: relative; display: flex; align-items: center; gap: 10px; }
+.toggle {
+  position: relative; width: 52px; height: 28px;
+  background: var(--muted);
+  border-radius: 14px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.toggle.on { background: var(--rose); }
+.toggle-knob {
+  position: absolute; top: 4px; left: 4px;
+  width: 20px; height: 20px;
+  border-radius: 50%; background: white;
+  transition: transform 0.3s;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+.toggle.on .toggle-knob { transform: translateX(24px); }
+.toggle-text { font-size: 0.82rem; font-weight: 500; color: var(--rose); }
+.mode-badge {
+  margin-left: auto;
+  padding: 4px 12px;
+  border-radius: 50px;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  background: rgba(249,200,212,0.3);
+  color: var(--rose);
+}
+
+/* Calendar */
+.calendar-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 20px;
+}
+.cal-nav { background: none; border: none; cursor: pointer; color: var(--rose); font-size: 1.2rem; padding: 8px; }
+.cal-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem;
+  color: var(--dark);
+  text-transform: capitalize;
+}
+.cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+.cal-day-name {
+  text-align: center;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 8px 0;
+}
+.cal-day {
+  aspect-ratio: 1;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+  background: none;
+  color: var(--text);
+}
+.cal-day:hover:not(.disabled):not(.empty) { background: var(--sakura); color: var(--brown); }
+.cal-day.selected { background: var(--rose); color: white; }
+.cal-day.today { border: 1.5px solid var(--rose); color: var(--rose); font-weight: 500; }
+.cal-day.disabled { color: var(--muted); opacity: 0.4; cursor: not-allowed; }
+.cal-day.empty { cursor: default; }
+
+/* Time slots */
+.slots-header { font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin: 28px 0 14px; }
+.slots-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.slot {
+  padding: 10px 6px;
+  text-align: center;
+  border-radius: 10px;
+  background: white;
+  border: 1.5px solid rgba(249,200,212,0.5);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--text);
+}
+.slot:hover { border-color: var(--rose); color: var(--rose); }
+.slot.selected { background: var(--rose); border-color: var(--rose); color: white; }
+.slot.blocked { background: #f5f5f5; border-color: #e0e0e0; color: #ccc; cursor: not-allowed; }
+
+/* Form */
+.booking-form { margin-top: 0; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.form-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+.form-group label { font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.form-group input, .form-group select, .form-group textarea {
+  border: 1.5px solid rgba(249,200,212,0.5);
+  border-radius: 12px;
+  padding: 14px 16px;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.9rem;
+  color: var(--text);
+  background: white;
+  transition: border-color 0.3s;
+  outline: none;
+}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--rose); }
+.form-group textarea { resize: none; height: 90px; }
+.booking-summary {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 20px;
+  border: 1px solid rgba(249,200,212,0.4);
+  font-size: 0.85rem;
+  display: none;
+}
+.booking-summary.visible { display: block; }
+.summary-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(249,200,212,0.2); }
+.summary-row:last-child { border-bottom: none; }
+.summary-label { color: var(--muted); }
+.summary-value { color: var(--text); font-weight: 400; }
+.btn-book {
+  width: 100%;
+  background: var(--rose);
+  color: white;
+  border: none;
+  padding: 16px;
+  border-radius: 14px;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.btn-book:hover { background: var(--brown); transform: translateY(-2px); }
+
+/* ═══ AVIS ═══ */
+#avis { background: white; }
+.avis-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.avis-card {
+  background: var(--cream);
+  border-radius: 20px;
+  padding: 32px 28px;
+  border: 1px solid rgba(249,200,212,0.3);
+}
+.avis-stars { font-size: 1.1rem; margin-bottom: 16px; color: var(--rose); letter-spacing: 4px; }
+.avis-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--text);
+  margin-bottom: 20px;
+}
+.avis-author { font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.avis-author strong { color: var(--rose); font-weight: 400; }
+
+/* ═══ RÈGLES ═══ */
+#regles { background: var(--cream); }
+.regles-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+.regle-card {
+  background: white;
+  border-radius: 20px;
+  padding: 32px 28px;
+  display: flex; gap: 20px; align-items: flex-start;
+  border: 1px solid rgba(249,200,212,0.3);
+}
+.regle-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.5rem;
+  color: rgba(249,200,212,0.6);
+  line-height: 1;
+  flex-shrink: 0;
+}
+.regle-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.15rem;
+  color: var(--dark);
+  margin-bottom: 10px;
+}
+.regle-text { font-size: 0.85rem; color: var(--muted); line-height: 1.7; }
+
+/* ═══ FOOTER ═══ */
+footer {
+  background: var(--dark);
+  color: rgba(255,255,255,0.7);
+  padding: 60px 60px 40px 180px;
+  position: relative;
+}
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 60px; margin-bottom: 40px; }
+.footer-brand {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 2rem;
+  color: var(--sakura);
+  margin-bottom: 16px;
+}
+.footer-desc { font-size: 0.85rem; line-height: 1.8; opacity: 0.7; }
+.footer-col h4 {
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 20px;
+}
+.footer-col ul { list-style: none; }
+.footer-col ul li { margin-bottom: 12px; }
+.footer-col ul li a { color: rgba(255,255,255,0.65); text-decoration: none; font-size: 0.85rem; transition: color 0.3s; }
+.footer-col ul li a:hover { color: var(--sakura); }
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.08);
+  padding-top: 28px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.footer-copy { font-size: 0.75rem; opacity: 0.5; }
+
+/* Serenity Badge */
+.serenity-badge {
+  display: inline-flex;
+  align-items: center; justify-content: center;
+  text-decoration: none;
+  position: relative;
+  width: 90px; height: 90px;
+}
+.badge-ring {
+  position: absolute; inset: 0;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.12);
+}
+.badge-text-svg {
+  position: absolute; inset: 0;
+}
+.badge-initials {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem;
+  font-weight: 300;
+  background: linear-gradient(135deg, #4fc3f7, #26a69a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  position: relative; z-index: 2;
+  letter-spacing: 0.05em;
+}
+.badge-shimmer {
+  position: absolute; inset: -2px;
+  border-radius: 50%;
+  background: conic-gradient(from var(--badge-angle, 0deg), transparent 0%, rgba(212,168,112,0.4) 20%, transparent 40%);
+  animation: badgeSpin 3s linear infinite;
+}
+@keyframes badgeSpin {
+  to { --badge-angle: 360deg; }
+}
+@property --badge-angle { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
+
+/* Admin button */
+.admin-btn {
+  position: fixed;
+  bottom: 24px; right: 24px;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--dark);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.4);
+  font-size: 0.75rem;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  text-decoration: none;
+  opacity: 0.3;
+  transition: opacity 0.3s;
+  z-index: 200;
+}
+.admin-btn:hover { opacity: 1; }
+
+/* ═══ MODAL ═══ */
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(42,26,26,0.7);
+  backdrop-filter: blur(6px);
+  z-index: 1000;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.4s;
+}
+.modal-overlay.open { opacity: 1; pointer-events: all; }
+.modal {
+  background: var(--cream);
+  border-radius: 28px;
+  padding: 52px 48px;
+  max-width: 440px; width: 90%;
+  text-align: center;
+  position: relative;
+  transform: scale(0.9) translateY(20px);
+  transition: transform 0.4s;
+}
+.modal-overlay.open .modal { transform: scale(1) translateY(0); }
+.modal-sakura { font-size: 3rem; margin-bottom: 20px; }
+.modal-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1.8rem;
+  color: var(--dark);
+  margin-bottom: 12px;
+}
+.modal-sub { font-size: 0.85rem; color: var(--muted); line-height: 1.7; margin-bottom: 28px; }
+.modal-detail {
+  background: white;
+  border-radius: 14px;
+  padding: 16px 20px;
+  margin-bottom: 24px;
+  font-size: 0.85rem;
+  color: var(--text);
+  line-height: 1.8;
+}
+.modal-close {
+  background: var(--rose);
+  color: white;
+  border: none;
+  padding: 14px 40px;
+  border-radius: 50px;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.82rem;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.modal-close:hover { background: var(--brown); }
+
+/* ═══ RESPONSIVE ═══ */
+@media (max-width: 960px) {
+  nav { padding: 16px 30px 16px 30px; }
+  nav .nav-links { display: none; }
+  section { padding: 80px 30px 80px 30px; }
+  #sakura-canvas { width: 80px; }
+  .apropos-grid, .booking-container { grid-template-columns: 1fr; gap: 40px; }
+  .services-grid { grid-template-columns: repeat(2, 1fr); }
+  .portfolio-grid { grid-template-columns: 1fr 1fr; }
+  .portfolio-item:nth-child(1) { grid-row: span 1; min-height: 220px; }
+  .portfolio-item:nth-child(4) { grid-column: span 1; }
+  .regles-grid { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+  footer { padding: 60px 30px 40px 30px; }
+}
+@media (max-width: 600px) {
+  #sakura-canvas { display: none; }
+  section { padding: 60px 20px; }
+  nav { padding: 14px 20px; }
+  .hero-title { font-size: 3rem; }
+  .services-grid { grid-template-columns: 1fr; }
+  .portfolio-grid { grid-template-columns: 1fr; }
+  .avis-grid { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+  .slots-grid { grid-template-columns: repeat(3, 1fr); }
+  footer { padding: 40px 20px; }
+  .footer-bottom { flex-direction: column; gap: 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Sakura Canvas -->
+<canvas id="sakura-canvas"></canvas>
+
+<!-- Navigation -->
+<nav id="nav">
+  <span class="nav-logo">Beauté Mell</span>
+  <ul class="nav-links">
+    <li><a href="#apropos">À propos</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#portfolio">Portfolio</a></li>
+    <li><a href="#avis">Avis</a></li>
+  </ul>
+  <a href="#reservation" class="nav-cta">Réserver</a>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section id="hero">
+  <div class="hero-content">
+    <p class="hero-eyebrow rv">Saint-Georges · Liège · Belgique</p>
+    <h1 class="hero-title rv rv-delay-1">Beauté<br><span>Mell</span></h1>
+    <p class="hero-sub rv rv-delay-2">Gel &nbsp;·&nbsp; Résine &nbsp;·&nbsp; VSP</p>
+    <p class="hero-tagline rv rv-delay-3">« Il n'y a rien qu'une manucure ne puisse réparer. »</p>
+    <div class="hero-btns rv rv-delay-4">
+      <a href="#reservation" class="btn-primary">Réserver</a>
+      <a href="#portfolio" class="btn-outline">Voir le portfolio</a>
+    </div>
+    <div class="hero-stats rv rv-delay-4">
+      <div class="stat-item">
+        <span class="stat-num">205+</span>
+        <span class="stat-label">Réalisations</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">5★</span>
+        <span class="stat-label">Note moyenne</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">Liège</span>
+        <span class="stat-label">Saint-Georges</span>
+      </div>
+    </div>
+  </div>
+  <div class="hero-deco"></div>
+</section>
+
+<!-- ═══ À PROPOS ═══ -->
+<section id="apropos">
+  <div class="apropos-grid">
+    <div class="apropos-photos rv">
+      <div class="photo-main">
+        <!-- photo-mell.jpg -->
+        <div class="photo-placeholder">
+          <span>🌸</span>
+          <small>Photo Mell</small>
+        </div>
+      </div>
+      <div class="photo-mini">
+        <!-- photo-mell-mini.jpg -->
+      </div>
+    </div>
+    <div class="apropos-text">
+      <p class="section-label rv">À propos de Mell</p>
+      <h2 class="rv">Passion,<br>précision & délicatesse</h2>
+      <p class="bio-text rv">Bonjour, moi c'est Mell. Ongliste passionnée basée à Saint-Georges, à Liège. Je crée des ongles sur mesure qui te correspondent vraiment — que tu veuilles quelque chose de discret, d'extravagant, ou entre les deux.</p>
+      <blockquote class="bio-quote rv">
+        « Tes ongles c'est pas juste du vernis — c'est ton humeur, ton style, ton histoire. »
+      </blockquote>
+      <p class="bio-text rv">Chaque pose est pensée avec soin. Je travaille en gel, résine et VSP, avec une attention particulière à la santé de ton ongle naturel. Parce que la beauté ne devrait jamais venir au détriment de ta santé.</p>
+      <div class="bio-tags rv">
+        <span class="tag">Pose Gel</span>
+        <span class="tag">Résine</span>
+        <span class="tag">VSP</span>
+        <span class="tag">Nail Art</span>
+        <span class="tag">Remplissage</span>
+        <span class="tag">Dépose</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SERVICES ═══ -->
+<section id="services">
+  <p class="section-label rv">Ce que je propose</p>
+  <h2 class="rv">Mes services</h2>
+  <div class="services-grid">
+    <div class="service-card rv">
+      <span class="service-sakura">🌸</span>
+      <div class="service-icon">💅</div>
+      <p class="service-name">Pose Gel</p>
+      <p class="service-desc">Une pose gel longue durée pour des ongles résistants et brillants. Effet naturel ou glamour, selon tes envies.</p>
+      <p class="service-price">À partir de 45€</p>
+    </div>
+    <div class="service-card rv rv-delay-1">
+      <span class="service-sakura">🌸</span>
+      <div class="service-icon">✨</div>
+      <p class="service-name">Résine</p>
+      <p class="service-desc">La résine pour allonger et renforcer tes ongles naturels. Ultra-léger, ultra-naturel.</p>
+      <p class="service-price">À partir de 50€</p>
+    </div>
+    <div class="service-card rv rv-delay-2">
+      <span class="service-sakura">🌸</span>
+      <div class="service-icon">🌟</div>
+      <p class="service-name">VSP</p>
+      <p class="service-desc">Le Vernis Semi-Permanent pour une couleur impeccable pendant 3 semaines, sans abîmer l'ongle.</p>
+      <p class="service-price">À partir de 30€</p>
+    </div>
+    <div class="service-card rv rv-delay-3">
+      <span class="service-sakura">🌸</span>
+      <div class="service-icon">🎨</div>
+      <p class="service-name">Nail Art</p>
+      <p class="service-desc">Des créations uniques et personnalisées — florales, géométriques, freestyle. Chaque ongle est une toile.</p>
+      <p class="service-price">Sur devis</p>
+    </div>
+    <div class="service-card rv rv-delay-4">
+      <span class="service-sakura">🌸</span>
+      <div class="service-icon">🔄</div>
+      <p class="service-name">Remplissage</p>
+      <p class="service-desc">Entretien de ta pose toutes les 3-4 semaines pour garder tes ongles parfaits plus longtemps.</p>
+      <p class="service-price">À partir de 35€</p>
+    </div>
+    <div class="service-card rv rv-delay-4">
+      <span class="service-sakura">🌸</span>
+      <div class="service-icon">🌿</div>
+      <p class="service-name">Dépose</p>
+      <p class="service-desc">Une dépose douce et sécurisée pour préserver la santé de tes ongles naturels.</p>
+      <p class="service-price">À partir de 15€</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PORTFOLIO ═══ -->
+<section id="portfolio">
+  <p class="section-label rv">Mes créations</p>
+  <h2 class="rv">Portfolio</h2>
+  <div class="portfolio-grid">
+    <div class="portfolio-item rv">
+      <!-- photo-1.jpg -->
+      <div class="port-placeholder"><span>🌸</span><small>photo-1.jpg</small></div>
+      <div class="portfolio-overlay"><span class="portfolio-technique">Gel French Nude</span></div>
+    </div>
+    <div class="portfolio-item rv rv-delay-1">
+      <!-- photo-2.jpg -->
+      <div class="port-placeholder"><span>💅</span><small>photo-2.jpg</small></div>
+      <div class="portfolio-overlay"><span class="portfolio-technique">Nail Art Floral</span></div>
+    </div>
+    <div class="portfolio-item rv rv-delay-2">
+      <!-- photo-3.jpg -->
+      <div class="port-placeholder"><span>✨</span><small>photo-3.jpg</small></div>
+      <div class="portfolio-overlay"><span class="portfolio-technique">Résine Rose Gold</span></div>
+    </div>
+    <div class="portfolio-item rv rv-delay-3">
+      <!-- photo-4.jpg -->
+      <div class="port-placeholder"><span>🌷</span><small>photo-4.jpg</small></div>
+      <div class="portfolio-overlay"><span class="portfolio-technique">VSP Bordeaux</span></div>
+    </div>
+    <div class="portfolio-item rv rv-delay-1">
+      <!-- photo-5.jpg -->
+      <div class="port-placeholder"><span>🎀</span><small>photo-5.jpg</small></div>
+      <div class="portfolio-overlay"><span class="portfolio-technique">Gel Baby Boomer</span></div>
+    </div>
+    <div class="portfolio-item rv rv-delay-2">
+      <!-- photo-6.jpg -->
+      <div class="port-placeholder"><span>🌺</span><small>photo-6.jpg</small></div>
+      <div class="portfolio-overlay"><span class="portfolio-technique">Nail Art Géo</span></div>
+    </div>
+    <div class="portfolio-item rv rv-delay-3">
+      <!-- photo-7.jpg -->
+      <div class="port-placeholder"><span>💎</span><small>photo-7.jpg</small></div>
+      <div class="portfolio-overlay"><span class="portfolio-technique">Chrome Mirror</span></div>
+    </div>
+    <div class="portfolio-item rv rv-delay-4">
+      <!-- photo-8.jpg -->
+      <div class="port-placeholder"><span>🦋</span><small>photo-8.jpg</small></div>
+      <div class="portfolio-overlay"><span class="portfolio-technique">Gel Nude Naturel</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ RÉSERVATION ═══ -->
+<section id="reservation">
+  <p class="section-label rv">Prendre rendez-vous</p>
+  <h2 class="rv">Réserver</h2>
+  <div class="booking-container">
+    <div class="booking-left rv">
+      <!-- Mode switch -->
+      <div class="mode-switch">
+        <span class="mode-label">Mode</span>
+        <div class="toggle-wrap">
+          <div class="toggle on" id="modeToggle" onclick="toggleMode()">
+            <div class="toggle-knob"></div>
+          </div>
+          <span class="toggle-text" id="modeText">AUTO</span>
+        </div>
+        <span class="mode-badge" id="modeBadge">Confirmation instantanée</span>
+      </div>
+
+      <!-- Calendar -->
+      <div class="calendar-header">
+        <button class="cal-nav" onclick="prevMonth()">&#8249;</button>
+        <span class="cal-title" id="calTitle"></span>
+        <button class="cal-nav" onclick="nextMonth()">&#8250;</button>
+      </div>
+      <div class="cal-grid" id="calGrid">
+        <div class="cal-day-name">Lun</div>
+        <div class="cal-day-name">Mar</div>
+        <div class="cal-day-name">Mer</div>
+        <div class="cal-day-name">Jeu</div>
+        <div class="cal-day-name">Ven</div>
+        <div class="cal-day-name">Sam</div>
+        <div class="cal-day-name">Dim</div>
+      </div>
+
+      <!-- Time slots -->
+      <p class="slots-header" id="slotsHeader">Choisissez d'abord une date</p>
+      <div class="slots-grid" id="slotsGrid"></div>
+    </div>
+
+    <div class="booking-right rv rv-delay-2">
+      <form class="booking-form" onsubmit="submitBooking(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Prénom</label>
+            <input type="text" id="bPrenom" placeholder="Marie" required>
+          </div>
+          <div class="form-group">
+            <label>Nom</label>
+            <input type="text" id="bNom" placeholder="Dupont" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Téléphone</label>
+            <input type="tel" id="bTel" placeholder="+32 470 00 00 00" required>
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" id="bEmail" placeholder="marie@email.com" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Service souhaité</label>
+          <select id="bService" required>
+            <option value="">— Choisir un service —</option>
+            <option value="Pose Gel">Pose Gel (dès 45€)</option>
+            <option value="Résine">Résine (dès 50€)</option>
+            <option value="VSP">VSP (dès 30€)</option>
+            <option value="Nail Art">Nail Art</option>
+            <option value="Remplissage">Remplissage (dès 35€)</option>
+            <option value="Dépose">Dépose (dès 15€)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Message (optionnel)</label>
+          <textarea id="bMessage" placeholder="Précisions sur ta demande, inspirations..."></textarea>
+        </div>
+
+        <div class="booking-summary" id="bookingSummary">
+          <div class="summary-row">
+            <span class="summary-label">Date</span>
+            <span class="summary-value" id="sumDate">—</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">Heure</span>
+            <span class="summary-value" id="sumTime">—</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">Service</span>
+            <span class="summary-value" id="sumService">—</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">Mode</span>
+            <span class="summary-value" id="sumMode">Confirmation instantanée</span>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-book">Confirmer la réservation 🌸</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ AVIS ═══ -->
+<section id="avis">
+  <p class="section-label rv">Ce qu'elles disent</p>
+  <h2 class="rv">Témoignages</h2>
+  <div class="avis-grid">
+    <div class="avis-card rv">
+      <div class="avis-stars">🌸🌸🌸🌸🌸</div>
+      <p class="avis-text">« Mell est une artiste ! Ma pose gel a tenu 5 semaines sans la moindre écaille. Je recommande les yeux fermés. »</p>
+      <p class="avis-author"><strong>Léa V.</strong> — Cliente fidèle</p>
+    </div>
+    <div class="avis-card rv rv-delay-1">
+      <div class="avis-stars">🌸🌸🌸🌸🌸</div>
+      <p class="avis-text">« J'avais des ongles très abîmés et Mell a pris le temps de les soigner avant de poser. Tellement professionnelle et douce. »</p>
+      <p class="avis-author"><strong>Sophie M.</strong> — Cliente depuis 2023</p>
+    </div>
+    <div class="avis-card rv rv-delay-2">
+      <div class="avis-stars">🌸🌸🌸🌸🌸</div>
+      <p class="avis-text">« Le nail art floral que Mell m'a fait était exactement comme ce que j'avais en tête — et même mieux ! »</p>
+      <p class="avis-author"><strong>Ambre D.</strong> — Cliente depuis 2024</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ RÈGLES ═══ -->
+<section id="regles">
+  <p class="section-label rv">Informations importantes</p>
+  <h2 class="rv">Les règles de Mell</h2>
+  <div class="regles-grid">
+    <div class="regle-card rv">
+      <span class="regle-num">01</span>
+      <div>
+        <p class="regle-title">Arriver à l'heure</p>
+        <p class="regle-text">Mon planning est serré et chaque cliente compte. Un retard de plus de 10 minutes peut compromettre l'ensemble de la séance. Merci de prévoir de la marge.</p>
+      </div>
+    </div>
+    <div class="regle-card rv rv-delay-1">
+      <span class="regle-num">02</span>
+      <div>
+        <p class="regle-title">Respecter son rendez-vous</p>
+        <p class="regle-text">Un RDV non honoré, c'est du temps perdu pour moi et pour une autre cliente qui aurait pu être reçue. Je compte sur ta bonne foi.</p>
+      </div>
+    </div>
+    <div class="regle-card rv rv-delay-2">
+      <span class="regle-num">03</span>
+      <div>
+        <p class="regle-title">Prévenir en cas d'absence</p>
+        <p class="regle-text">Si tu ne peux vraiment pas venir, préviens-moi au minimum 24h à l'avance. Un simple message suffit. Je comprends, la vie c'est la vie — mais merci de me le dire.</p>
+      </div>
+    </div>
+    <div class="regle-card rv rv-delay-3">
+      <span class="regle-num">04</span>
+      <div>
+        <p class="regle-title">Reconnaître le métier</p>
+        <p class="regle-text">L'onglerie, c'est un vrai métier. Un savoir-faire qui s'apprend et se perfectionne. Je mets tout mon cœur dans chaque pose — j'espère que tu le ressentiras.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <p class="footer-brand">Beauté Mell</p>
+      <p class="footer-desc">Ongliste passionnée à Saint-Georges, Liège.<br>Gel · Résine · VSP · Nail Art</p>
+    </div>
+    <div class="footer-col">
+      <h4>Navigation</h4>
+      <ul>
+        <li><a href="#apropos">À propos</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#portfolio">Portfolio</a></li>
+        <li><a href="#reservation">Réserver</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="#">Saint-Georges, Liège</a></li>
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#reservation">Prendre RDV</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2025 Beauté Mell — Tous droits réservés</p>
+    <a href="https://plateoo.github.io/serenity-studio/" target="_blank" class="serenity-badge" title="Serenity Studio">
+      <div class="badge-shimmer"></div>
+      <div class="badge-ring"></div>
+      <svg class="badge-text-svg" viewBox="0 0 90 90">
+        <defs>
+          <path id="circle-path" d="M 45,45 m -30,0 a 30,30 0 1,1 60,0 a 30,30 0 1,1 -60,0"/>
+        </defs>
+        <text fill="rgba(255,255,255,0.55)" font-size="7.5" font-family="Jost,sans-serif" letter-spacing="2">
+          <textPath href="#circle-path" startOffset="0%">SERENITY STUDIO · BELGIQUE · </textPath>
+        </text>
+      </svg>
+      <span class="badge-initials">SS</span>
+    </a>
+  </div>
+</footer>
+
+<!-- Admin button -->
+<a href="admin.html" class="admin-btn" title="Admin">⚙</a>
+
+<!-- Confirmation Modal -->
+<div class="modal-overlay" id="confirmModal">
+  <div class="modal">
+    <div class="modal-sakura" id="modalSakura">🌸</div>
+    <h3 class="modal-title" id="modalTitle">Réservation confirmée !</h3>
+    <p class="modal-sub" id="modalSub">Ton rendez-vous a été enregistré avec succès.</p>
+    <div class="modal-detail" id="modalDetail"></div>
+    <button class="modal-close" onclick="closeModal()">Parfait, merci !</button>
+  </div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════
+   SAKURA CANVAS ANIMATION
+═══════════════════════════════════════════════ */
+(function() {
+  const canvas = document.getElementById('sakura-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, progress = 0, targetProgress = 0;
+  let animFrame;
+
+  // Branch structure: each segment [x1,y1, cx1,cy1, cx2,cy2, x2,y2] in 0..1 coords
+  // y=1 is bottom, y=0 is top
+  const TRUNK = [
+    [0.55, 1.00,  0.50, 0.85,  0.48, 0.72,  0.50, 0.62],
+    [0.50, 0.62,  0.52, 0.52,  0.55, 0.42,  0.52, 0.32],
+    [0.52, 0.32,  0.50, 0.22,  0.48, 0.13,  0.50, 0.04],
+  ];
+
+  // Sub-branches: [startT_on_trunk_segment_index, t_along_segment, ctrl, end]
+  // Simplified: just endpoint branches with their progress threshold
+  const BRANCHES = [
+    { threshold: 0.20, from: [0.50, 0.62], cp1: [0.72, 0.60], cp2: [0.85, 0.55], to: [0.90, 0.50], flowerCount: 2 },
+    { threshold: 0.35, from: [0.51, 0.47], cp1: [0.28, 0.44], cp2: [0.12, 0.40], to: [0.05, 0.37], flowerCount: 1 },
+    { threshold: 0.52, from: [0.52, 0.32], cp1: [0.75, 0.28], cp2: [0.88, 0.22], to: [0.92, 0.19], flowerCount: 2 },
+    { threshold: 0.68, from: [0.51, 0.22], cp1: [0.22, 0.20], cp2: [0.08, 0.15], to: [0.04, 0.12], flowerCount: 1 },
+    { threshold: 0.83, from: [0.50, 0.12], cp1: [0.75, 0.08], cp2: [0.88, 0.04], to: [0.94, 0.02], flowerCount: 2 },
+  ];
+
+  function resize() {
+    W = canvas.width = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
+  }
+
+  function px(nx, ny) { return [nx * W, ny * H]; }
+
+  // Draw a cubic bezier up to parameter t [0..1]
+  function drawBezierPartial(x1,y1,cx1,cy1,cx2,cy2,x2,y2, tEnd, lineWidth, alpha) {
+    if (tEnd <= 0) return;
+    tEnd = Math.min(1, tEnd);
+    // Subdivide at tEnd using De Casteljau
+    const mt = 1 - tEnd;
+    const ax = x1*mt + cx1*tEnd, ay = y1*mt + cy1*tEnd;
+    const bx = cx1*mt + cx2*tEnd, by = cy1*mt + cy2*tEnd;
+    const cx = cx2*mt + x2*tEnd, cy = cy2*mt + y2*tEnd;
+    const dx = ax*mt + bx*tEnd, dy = ay*mt + by*tEnd;
+    const ex = bx*mt + cx*tEnd, ey = by*mt + cy*tEnd;
+    const fx = dx*mt + ex*tEnd, fy = dy*mt + ey*tEnd;
+
+    ctx.save();
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    ctx.bezierCurveTo(ax, ay, dx, dy, fx, fy);
+    ctx.strokeStyle = `rgba(122,72,40,${alpha})`;
+    ctx.lineWidth = lineWidth;
+    ctx.lineCap = 'round';
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  // Evaluate point on cubic bezier at parameter t
+  function bezierPoint(x1,y1,cx1,cy1,cx2,cy2,x2,y2, t) {
+    const mt = 1-t;
+    return [
+      mt*mt*mt*x1 + 3*mt*mt*t*cx1 + 3*mt*t*t*cx2 + t*t*t*x2,
+      mt*mt*mt*y1 + 3*mt*mt*t*cy1 + 3*mt*t*t*cy2 + t*t*t*y2
+    ];
+  }
+
+  function drawPetal(cx, cy, radius, angle, openness, color) {
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(angle);
+    const L = radius * openness;
+    const W2 = radius * 0.55 * openness;
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.bezierCurveTo(W2, -L*0.25, W2*1.1, -L*0.65, 0, -L);
+    ctx.bezierCurveTo(-W2*1.1, -L*0.65, -W2, -L*0.25, 0, 0);
+    ctx.fillStyle = color;
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function drawFlower(x, y, radius, openness) {
+    if (openness <= 0.01) return;
+    const rot = openness * 0.5;
+    // Petals
+    for (let i = 0; i < 5; i++) {
+      const angle = (i * Math.PI * 2 / 5) - Math.PI / 2 + rot;
+      const alpha = openness;
+      const inner = `rgba(249,200,212,${alpha})`;
+      drawPetal(x, y, radius, angle, openness, inner);
+    }
+    // Petal outlines (slightly darker)
+    ctx.save();
+    for (let i = 0; i < 5; i++) {
+      const angle = (i * Math.PI * 2 / 5) - Math.PI / 2 + rot;
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(angle);
+      const L = radius * openness;
+      const W2 = radius * 0.55 * openness;
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.bezierCurveTo(W2, -L*0.25, W2*1.1, -L*0.65, 0, -L);
+      ctx.bezierCurveTo(-W2*1.1, -L*0.65, -W2, -L*0.25, 0, 0);
+      ctx.strokeStyle = `rgba(224,120,152,${openness * 0.3})`;
+      ctx.lineWidth = 0.5;
+      ctx.stroke();
+      ctx.restore();
+    }
+    ctx.restore();
+    // Center white circle
+    ctx.beginPath();
+    ctx.arc(x, y, radius * 0.22 * openness, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(255,255,255,${openness})`;
+    ctx.fill();
+    // Stamens (bordeaux dots)
+    for (let i = 0; i < 8; i++) {
+      const a = (i * Math.PI * 2 / 8) + rot;
+      const dist = radius * 0.28 * openness;
+      ctx.beginPath();
+      ctx.arc(x + Math.cos(a)*dist, y + Math.sin(a)*dist, 1.2, 0, Math.PI*2);
+      ctx.fillStyle = `rgba(100,20,50,${openness * 0.8})`;
+      ctx.fill();
+    }
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    if (progress < 0.01) return;
+
+    // Total trunk segments: each covers 1/3 of [0..1] scroll
+    const TRUNK_TOTAL = TRUNK.length;
+
+    // Draw trunk segments
+    TRUNK.forEach((seg, i) => {
+      const segStart = i / TRUNK_TOTAL;
+      const segEnd = (i + 1) / TRUNK_TOTAL;
+      const segProgress = (progress - segStart) / (segEnd - segStart);
+      if (segProgress <= 0) return;
+      const t = Math.min(1, segProgress);
+
+      const [x1,y1, cx1,cy1, cx2,cy2, x2,y2] = seg;
+      const [px1,py1] = px(x1,y1);
+      const [pcx1,pcy1] = px(cx1,cy1);
+      const [pcx2,pcy2] = px(cx2,cy2);
+      const [px2,py2] = px(x2,y2);
+
+      // Trunk gets thinner upward
+      const baseWidth = 4.5 - i * 1.2;
+      drawBezierPartial(px1,py1, pcx1,pcy1, pcx2,pcy2, px2,py2, t, baseWidth, 0.85);
+    });
+
+    // Draw sub-branches and flowers
+    BRANCHES.forEach(branch => {
+      if (progress < branch.threshold) return;
+      const branchProgress = Math.min(1, (progress - branch.threshold) / 0.12);
+
+      const [fx, fy] = px(branch.from[0], branch.from[1]);
+      const [cx1, cy1] = px(branch.cp1[0], branch.cp1[1]);
+      const [cx2, cy2] = px(branch.cp2[0], branch.cp2[1]);
+      const [tx, ty] = px(branch.to[0], branch.to[1]);
+
+      drawBezierPartial(fx,fy, cx1,cy1, cx2,cy2, tx,ty, branchProgress, 2.0, 0.7);
+
+      // Flowers along branch tip
+      const flowerProgress = Math.min(1, (progress - branch.threshold - 0.06) / 0.10);
+      if (flowerProgress <= 0) return;
+
+      // Place flowers at/near branch end
+      for (let fi = 0; fi < branch.flowerCount; fi++) {
+        const ft = 0.75 + fi * 0.2;
+        const mt = 1-ft;
+        const flx = mt*mt*mt*fx + 3*mt*mt*ft*cx1 + 3*mt*ft*ft*cx2 + ft*ft*ft*tx;
+        const fly = mt*mt*mt*fy + 3*mt*mt*ft*cy1 + 3*mt*ft*ft*cy2 + ft*ft*ft*ty;
+        const jitter = fi * 12;
+        drawFlower(flx + jitter, fly - jitter*0.3, 10 + fi*2, flowerProgress);
+      }
+    });
+
+    // Draw small flower at top of trunk when near complete
+    if (progress > 0.85) {
+      const topFlowerOpenness = Math.min(1, (progress - 0.85) / 0.15);
+      const [topX, topY] = px(0.50, 0.04);
+      drawFlower(topX, topY, 12, topFlowerOpenness);
+    }
+  }
+
+  function animate() {
+    progress += (targetProgress - progress) * 0.06;
+    draw();
+    animFrame = requestAnimationFrame(animate);
+  }
+
+  function onScroll() {
+    const scrolled = window.scrollY;
+    const total = Math.max(1, document.body.scrollHeight - window.innerHeight);
+    targetProgress = Math.min(1, scrolled / total);
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', () => { resize(); draw(); });
+  resize();
+  animate();
+})();
+
+/* ═══════════════════════════════════════════════
+   SCROLL REVEAL
+═══════════════════════════════════════════════ */
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+document.querySelectorAll('.rv').forEach(el => revealObs.observe(el));
+
+/* ═══════════════════════════════════════════════
+   NAV SCROLL
+═══════════════════════════════════════════════ */
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 40);
+}, { passive: true });
+
+/* ═══════════════════════════════════════════════
+   BOOKING SYSTEM
+═══════════════════════════════════════════════ */
+let calYear, calMonth, selectedDate = null, selectedSlot = null, bookingMode = 'auto';
+
+function initCalendar() {
+  const now = new Date();
+  calYear = now.getFullYear();
+  calMonth = now.getMonth();
+  renderCalendar();
+}
+
+function renderCalendar() {
+  const months = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+  document.getElementById('calTitle').textContent = months[calMonth] + ' ' + calYear;
+
+  const grid = document.getElementById('calGrid');
+  // Remove all day cells (keep day-name headers)
+  const dayNames = grid.querySelectorAll('.cal-day-name');
+  grid.innerHTML = '';
+  dayNames.forEach(d => grid.appendChild(d.cloneNode(true)));
+
+  const firstDay = new Date(calYear, calMonth, 1).getDay(); // 0=Sun
+  const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
+  const today = new Date();
+
+  // First day offset (Mon=0)
+  const offset = (firstDay === 0) ? 6 : firstDay - 1;
+  for (let i = 0; i < offset; i++) {
+    const empty = document.createElement('div');
+    empty.className = 'cal-day empty';
+    grid.appendChild(empty);
+  }
+
+  const blockedSlots = JSON.parse(localStorage.getItem('bm_blocked') || '{}');
+
+  for (let d = 1; d <= daysInMonth; d++) {
+    const btn = document.createElement('button');
+    const dateObj = new Date(calYear, calMonth, d);
+    const dateStr = formatDate(dateObj);
+    const isSunday = dateObj.getDay() === 0;
+    const isPast = dateObj < new Date(today.getFullYear(), today.getMonth(), today.getDate());
+
+    btn.className = 'cal-day';
+    btn.textContent = d;
+
+    if (isSunday || isPast) {
+      btn.classList.add('disabled');
+      btn.disabled = true;
+    } else {
+      if (dateStr === formatDate(today)) btn.classList.add('today');
+      if (dateStr === selectedDate) btn.classList.add('selected');
+      btn.onclick = () => selectDate(dateStr, btn);
+    }
+    grid.appendChild(btn);
+  }
+}
+
+function formatDate(d) {
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+}
+
+function formatDateFR(str) {
+  if (!str) return '';
+  const [y,m,d] = str.split('-');
+  const months = ['janv.','févr.','mars','avr.','mai','juin','juil.','août','sept.','oct.','nov.','déc.'];
+  return d + ' ' + months[parseInt(m)-1] + ' ' + y;
+}
+
+function prevMonth() {
+  calMonth--; if (calMonth < 0) { calMonth = 11; calYear--; }
+  renderCalendar();
+}
+function nextMonth() {
+  calMonth++; if (calMonth > 11) { calMonth = 0; calYear++; }
+  renderCalendar();
+}
+
+function selectDate(dateStr, btn) {
+  document.querySelectorAll('.cal-day').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  selectedDate = dateStr;
+  selectedSlot = null;
+  renderSlots();
+  updateSummary();
+}
+
+function renderSlots() {
+  const grid = document.getElementById('slotsGrid');
+  const header = document.getElementById('slotsHeader');
+  grid.innerHTML = '';
+
+  if (!selectedDate) { header.textContent = 'Choisissez d\'abord une date'; return; }
+  header.textContent = 'Créneaux disponibles — ' + formatDateFR(selectedDate);
+
+  const reservations = JSON.parse(localStorage.getItem('bm_reservations') || '[]');
+  const blocked = JSON.parse(localStorage.getItem('bm_blocked') || '{}');
+  const takenSlots = reservations
+    .filter(r => r.date === selectedDate && r.status !== 'refused')
+    .map(r => r.time);
+  const blockedOnDay = (blocked[selectedDate] || []);
+
+  for (let h = 9; h < 17; h++) {
+    for (let m = 0; m < 60; m += 30) {
+      const time = String(h).padStart(2,'0') + ':' + String(m).padStart(2,'0');
+      const div = document.createElement('div');
+      div.className = 'slot';
+      div.textContent = time;
+      if (takenSlots.includes(time) || blockedOnDay.includes(time)) {
+        div.classList.add('blocked');
+      } else {
+        div.onclick = () => selectSlot(time, div);
+        if (time === selectedSlot) div.classList.add('selected');
+      }
+      grid.appendChild(div);
+    }
+  }
+}
+
+function selectSlot(time, div) {
+  document.querySelectorAll('.slot').forEach(s => s.classList.remove('selected'));
+  div.classList.add('selected');
+  selectedSlot = time;
+  updateSummary();
+}
+
+function updateSummary() {
+  const summary = document.getElementById('bookingSummary');
+  const service = document.getElementById('bService').value;
+  if (selectedDate && selectedSlot && service) {
+    summary.classList.add('visible');
+    document.getElementById('sumDate').textContent = formatDateFR(selectedDate);
+    document.getElementById('sumTime').textContent = selectedSlot;
+    document.getElementById('sumService').textContent = service;
+    document.getElementById('sumMode').textContent = bookingMode === 'auto' ? 'Confirmation instantanée' : 'En attente de confirmation';
+  } else {
+    summary.classList.remove('visible');
+  }
+}
+
+document.getElementById('bService').addEventListener('change', updateSummary);
+
+function toggleMode() {
+  const toggle = document.getElementById('modeToggle');
+  const text = document.getElementById('modeText');
+  const badge = document.getElementById('modeBadge');
+  if (bookingMode === 'auto') {
+    bookingMode = 'manual';
+    toggle.classList.remove('on');
+    text.textContent = 'MANUEL';
+    badge.textContent = 'En attente de confirmation';
+  } else {
+    bookingMode = 'auto';
+    toggle.classList.add('on');
+    text.textContent = 'AUTO';
+    badge.textContent = 'Confirmation instantanée';
+  }
+  updateSummary();
+}
+
+function submitBooking(e) {
+  e.preventDefault();
+  if (!selectedDate || !selectedSlot) {
+    alert('Veuillez choisir une date et un créneau horaire.');
+    return;
+  }
+  const reservation = {
+    id: Date.now(),
+    date: selectedDate,
+    time: selectedSlot,
+    prenom: document.getElementById('bPrenom').value,
+    nom: document.getElementById('bNom').value,
+    tel: document.getElementById('bTel').value,
+    email: document.getElementById('bEmail').value,
+    service: document.getElementById('bService').value,
+    message: document.getElementById('bMessage').value,
+    mode: bookingMode,
+    status: bookingMode === 'auto' ? 'confirmed' : 'pending',
+    createdAt: new Date().toISOString()
+  };
+  const reservations = JSON.parse(localStorage.getItem('bm_reservations') || '[]');
+  reservations.push(reservation);
+  localStorage.setItem('bm_reservations', JSON.stringify(reservations));
+  showModal(reservation);
+  e.target.reset();
+  selectedDate = null;
+  selectedSlot = null;
+  renderCalendar();
+  renderSlots();
+  document.getElementById('bookingSummary').classList.remove('visible');
+}
+
+function showModal(r) {
+  const modal = document.getElementById('confirmModal');
+  const isAuto = r.mode === 'auto';
+  document.getElementById('modalSakura').textContent = isAuto ? '🌸' : '⏳';
+  document.getElementById('modalTitle').textContent = isAuto ? 'Réservation confirmée !' : 'Demande envoyée !';
+  document.getElementById('modalSub').textContent = isAuto
+    ? 'Ton rendez-vous est confirmé. À très bientôt chez Beauté Mell !'
+    : 'Ta demande a été envoyée. Mell te contactera pour confirmer ton créneau.';
+  document.getElementById('modalDetail').innerHTML =
+    `<strong>${r.prenom} ${r.nom}</strong><br>${formatDateFR(r.date)} à ${r.time}<br>${r.service}`;
+  modal.classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('confirmModal').classList.remove('open');
+}
+
+document.getElementById('confirmModal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+initCalendar();
+
+/* ═══════════════════════════════════════════════
+   SYNC ADMIN MODE
+═══════════════════════════════════════════════ */
+(function() {
+  const savedMode = localStorage.getItem('bm_booking_mode');
+  if (savedMode === 'manual') {
+    bookingMode = 'manual';
+    const toggle = document.getElementById('modeToggle');
+    toggle.classList.remove('on');
+    document.getElementById('modeText').textContent = 'MANUEL';
+    document.getElementById('modeBadge').textContent = 'En attente de confirmation';
+  }
+  // Listen for changes from admin
+  window.addEventListener('storage', (e) => {
+    if (e.key === 'bm_booking_mode') {
+      bookingMode = e.newValue || 'auto';
+    }
+  });
+})();
+</script>
+</body>
+</html>

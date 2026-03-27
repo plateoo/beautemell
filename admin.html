@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Beauté Mell</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --sakura: #f9c8d4; --rose: #e07898; --gold: #d4a870;
+  --cream: #fffbfc; --brown: #7a4828; --dark: #2a1a1a;
+  --text: #4a3030; --muted: #9a7878;
+  --green: #4caf50; --red: #e05858; --orange: #e0a040;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Jost', sans-serif; font-weight: 300; background: #f5f0f0; color: var(--text); min-height: 100vh; }
+
+/* ═══ LOGIN ═══ */
+#login-screen {
+  min-height: 100vh; display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, #fff5f7 0%, var(--cream) 100%);
+}
+.login-box {
+  background: white; border-radius: 24px; padding: 48px 40px;
+  width: 360px; box-shadow: 0 20px 60px rgba(224,120,152,0.12);
+  text-align: center;
+}
+.login-logo {
+  font-family: 'Cormorant Garamond', serif; font-style: italic;
+  font-size: 2rem; color: var(--rose); margin-bottom: 6px;
+}
+.login-sub { font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 32px; }
+.login-box input {
+  width: 100%; border: 1.5px solid rgba(249,200,212,0.5); border-radius: 12px;
+  padding: 14px 16px; font-family: 'Jost', sans-serif; font-size: 0.9rem;
+  color: var(--text); background: white; outline: none; margin-bottom: 16px;
+  transition: border-color 0.3s; text-align: center;
+}
+.login-box input:focus { border-color: var(--rose); }
+.login-btn {
+  width: 100%; background: var(--rose); color: white; border: none;
+  padding: 14px; border-radius: 12px; font-family: 'Jost', sans-serif;
+  font-size: 0.85rem; letter-spacing: 0.1em; cursor: pointer; transition: background 0.3s;
+}
+.login-btn:hover { background: var(--brown); }
+.login-error { color: var(--red); font-size: 0.8rem; margin-top: 12px; }
+.login-back { margin-top: 16px; font-size: 0.78rem; color: var(--muted); }
+.login-back a { color: var(--rose); text-decoration: none; }
+
+/* ═══ ADMIN LAYOUT ═══ */
+#admin-panel { display: none; min-height: 100vh; }
+.admin-header {
+  background: var(--dark); color: white;
+  padding: 16px 32px; display: flex; align-items: center; justify-content: space-between;
+}
+.admin-logo { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.4rem; color: var(--sakura); }
+.admin-nav { display: flex; gap: 4px; }
+.admin-nav button {
+  background: none; border: none; color: rgba(255,255,255,0.6);
+  font-family: 'Jost', sans-serif; font-size: 0.8rem; letter-spacing: 0.1em;
+  text-transform: uppercase; padding: 8px 18px; border-radius: 8px; cursor: pointer;
+  transition: all 0.2s;
+}
+.admin-nav button.active { background: var(--rose); color: white; }
+.admin-nav button:hover:not(.active) { background: rgba(255,255,255,0.08); color: white; }
+.logout-btn {
+  background: none; border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.6);
+  padding: 8px 16px; border-radius: 8px; font-family: 'Jost', sans-serif; font-size: 0.78rem;
+  cursor: pointer; transition: all 0.2s;
+}
+.logout-btn:hover { border-color: var(--rose); color: var(--rose); }
+
+.admin-content { padding: 32px; max-width: 1200px; margin: 0 auto; }
+
+/* Tabs */
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* ═══ SECTION TITLES ═══ */
+.section-title {
+  font-family: 'Cormorant Garamond', serif; font-style: italic;
+  font-size: 1.6rem; color: var(--dark); margin-bottom: 8px;
+}
+.section-sub { font-size: 0.82rem; color: var(--muted); margin-bottom: 28px; }
+
+/* ═══ AGENDA ═══ */
+.agenda-toolbar {
+  display: flex; align-items: center; gap: 16px; margin-bottom: 24px; flex-wrap: wrap;
+}
+.toolbar-mode {
+  display: flex; align-items: center; gap: 12px;
+  background: white; padding: 12px 20px; border-radius: 12px;
+  border: 1px solid rgba(249,200,212,0.4);
+}
+.toolbar-mode label { font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.toggle { position: relative; width: 52px; height: 28px; background: var(--muted); border-radius: 14px; cursor: pointer; transition: background 0.3s; }
+.toggle.on { background: var(--rose); }
+.toggle-knob { position: absolute; top: 4px; left: 4px; width: 20px; height: 20px; border-radius: 50%; background: white; transition: transform 0.3s; box-shadow: 0 2px 6px rgba(0,0,0,0.15); }
+.toggle.on .toggle-knob { transform: translateX(24px); }
+.mode-badge-label { font-size: 0.82rem; font-weight: 500; color: var(--rose); }
+
+.filter-select {
+  border: 1.5px solid rgba(249,200,212,0.5); border-radius: 10px;
+  padding: 10px 16px; font-family: 'Jost', sans-serif; font-size: 0.85rem;
+  color: var(--text); background: white; outline: none; cursor: pointer;
+}
+
+/* Block slots section */
+.block-section {
+  background: white; border-radius: 16px; padding: 24px; margin-bottom: 28px;
+  border: 1px solid rgba(249,200,212,0.3);
+}
+.block-section h4 { font-size: 0.82rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; }
+.block-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+.block-row input[type="date"], .block-row input[type="time"] {
+  border: 1.5px solid rgba(249,200,212,0.5); border-radius: 10px;
+  padding: 10px 14px; font-family: 'Jost', sans-serif; font-size: 0.85rem;
+  color: var(--text); background: white; outline: none;
+}
+.btn-block {
+  background: var(--dark); color: white; border: none;
+  padding: 10px 20px; border-radius: 10px; font-family: 'Jost', sans-serif;
+  font-size: 0.8rem; cursor: pointer; letter-spacing: 0.08em; transition: background 0.3s;
+}
+.btn-block:hover { background: var(--rose); }
+
+/* Reservations table */
+.reservations-list { display: flex; flex-direction: column; gap: 12px; }
+.resa-card {
+  background: white; border-radius: 14px; padding: 20px 24px;
+  display: grid; grid-template-columns: auto 1fr auto auto;
+  gap: 20px; align-items: center;
+  border: 1px solid rgba(249,200,212,0.3);
+  transition: box-shadow 0.2s;
+}
+.resa-card:hover { box-shadow: 0 4px 20px rgba(224,120,152,0.08); }
+.resa-status {
+  width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
+}
+.resa-status.confirmed { background: var(--green); }
+.resa-status.pending { background: var(--orange); }
+.resa-status.refused { background: var(--red); }
+.resa-info {}
+.resa-name { font-size: 0.95rem; color: var(--dark); margin-bottom: 4px; }
+.resa-details { font-size: 0.78rem; color: var(--muted); }
+.resa-service {
+  background: var(--sakura); color: var(--brown);
+  padding: 4px 14px; border-radius: 50px; font-size: 0.72rem;
+  letter-spacing: 0.06em; white-space: nowrap;
+}
+.resa-actions { display: flex; gap: 8px; }
+.btn-confirm, .btn-refuse, .btn-del {
+  border: none; border-radius: 8px; padding: 7px 14px;
+  font-family: 'Jost', sans-serif; font-size: 0.75rem; cursor: pointer; transition: all 0.2s;
+}
+.btn-confirm { background: rgba(76,175,80,0.12); color: var(--green); }
+.btn-confirm:hover { background: var(--green); color: white; }
+.btn-refuse { background: rgba(224,88,88,0.10); color: var(--red); }
+.btn-refuse:hover { background: var(--red); color: white; }
+.btn-del { background: rgba(0,0,0,0.05); color: var(--muted); }
+.btn-del:hover { background: rgba(0,0,0,0.1); }
+.empty-state { text-align: center; padding: 60px 20px; color: var(--muted); font-size: 0.9rem; }
+
+/* ═══ PHOTOS ═══ */
+.photos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.drop-zone {
+  border: 2px dashed rgba(249,200,212,0.6); border-radius: 16px;
+  aspect-ratio: 1; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 10px;
+  cursor: pointer; transition: all 0.3s; position: relative; overflow: hidden;
+  background: white;
+}
+.drop-zone:hover { border-color: var(--rose); background: rgba(249,200,212,0.05); }
+.drop-zone.drag-over { border-color: var(--rose); background: rgba(249,200,212,0.1); transform: scale(1.02); }
+.drop-zone-icon { font-size: 2rem; opacity: 0.4; }
+.drop-zone-label { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.drop-zone-name { font-size: 0.68rem; color: rgba(154,120,120,0.6); }
+.drop-zone input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+.drop-zone img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.drop-zone .remove-photo {
+  position: absolute; top: 8px; right: 8px;
+  width: 28px; height: 28px; border-radius: 50%;
+  background: rgba(224,88,88,0.9); color: white; border: none;
+  font-size: 0.8rem; cursor: pointer; display: none; align-items: center; justify-content: center;
+}
+.drop-zone:hover .remove-photo { display: flex; }
+
+/* ═══ RÉSEAUX ═══ */
+.reseaux-container { display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; }
+.token-box { background: white; border-radius: 16px; padding: 28px; border: 1px solid rgba(249,200,212,0.3); }
+.token-box h4 { font-size: 0.82rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 20px; }
+.token-input-row { display: flex; gap: 12px; }
+.token-input-row input {
+  flex: 1; border: 1.5px solid rgba(249,200,212,0.5); border-radius: 10px;
+  padding: 12px 16px; font-family: 'Jost', sans-serif; font-size: 0.85rem;
+  color: var(--text); background: white; outline: none;
+  transition: border-color 0.3s;
+}
+.token-input-row input:focus { border-color: var(--rose); }
+.btn-fetch {
+  background: var(--rose); color: white; border: none;
+  padding: 12px 24px; border-radius: 10px; font-family: 'Jost', sans-serif;
+  font-size: 0.82rem; cursor: pointer; white-space: nowrap; transition: background 0.3s;
+}
+.btn-fetch:hover { background: var(--brown); }
+.token-guide { margin-top: 20px; }
+.guide-step {
+  display: flex; gap: 14px; align-items: flex-start;
+  padding: 12px 0; border-bottom: 1px solid rgba(249,200,212,0.2);
+}
+.guide-step:last-child { border-bottom: none; }
+.guide-num {
+  width: 24px; height: 24px; border-radius: 50%;
+  background: var(--sakura); color: var(--brown);
+  font-size: 0.75rem; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; font-weight: 500;
+}
+.guide-text { font-size: 0.82rem; color: var(--text); line-height: 1.5; }
+.guide-text a { color: var(--rose); text-decoration: none; }
+
+.instagram-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 16px; }
+.ig-photo { aspect-ratio: 1; border-radius: 8px; overflow: hidden; background: var(--sakura); }
+.ig-photo img { width: 100%; height: 100%; object-fit: cover; }
+.ig-stats { display: flex; gap: 16px; margin-bottom: 16px; }
+.ig-stat { background: white; border-radius: 10px; padding: 12px 16px; flex: 1; text-align: center; border: 1px solid rgba(249,200,212,0.3); }
+.ig-stat-num { font-size: 1.2rem; color: var(--rose); display: block; }
+.ig-stat-label { font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.ig-placeholder { text-align: center; padding: 40px; color: var(--muted); font-size: 0.85rem; }
+
+/* ═══ PARAMÈTRES ═══ */
+.params-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+.param-section { background: white; border-radius: 16px; padding: 28px; border: 1px solid rgba(249,200,212,0.3); }
+.param-section h4 { font-size: 0.82rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 20px; }
+.param-group { margin-bottom: 16px; }
+.param-group label { display: block; font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+.param-group input, .param-group textarea {
+  width: 100%; border: 1.5px solid rgba(249,200,212,0.5); border-radius: 10px;
+  padding: 12px 14px; font-family: 'Jost', sans-serif; font-size: 0.85rem;
+  color: var(--text); background: white; outline: none; transition: border-color 0.3s;
+}
+.param-group input:focus, .param-group textarea:focus { border-color: var(--rose); }
+.param-group textarea { height: 80px; resize: none; }
+.horaires-grid { display: flex; flex-direction: column; gap: 10px; }
+.horaire-row { display: grid; grid-template-columns: 80px 1fr; gap: 12px; align-items: center; }
+.horaire-day { font-size: 0.8rem; color: var(--text); }
+.horaire-inputs { display: flex; gap: 8px; align-items: center; }
+.horaire-inputs input[type="time"] {
+  border: 1.5px solid rgba(249,200,212,0.5); border-radius: 8px;
+  padding: 8px 10px; font-family: 'Jost', sans-serif; font-size: 0.8rem;
+  color: var(--text); background: white; outline: none;
+}
+.horaire-inputs input[type="checkbox"] { accent-color: var(--rose); cursor: pointer; }
+.horaire-closed { font-size: 0.72rem; color: var(--muted); }
+.btn-save {
+  background: var(--rose); color: white; border: none;
+  padding: 12px 28px; border-radius: 10px; font-family: 'Jost', sans-serif;
+  font-size: 0.82rem; letter-spacing: 0.08em; cursor: pointer; transition: background 0.3s;
+  margin-top: 20px;
+}
+.btn-save:hover { background: var(--brown); }
+.save-toast {
+  display: inline-flex; align-items: center; gap: 8px;
+  margin-top: 12px; font-size: 0.8rem; color: var(--green);
+  opacity: 0; transition: opacity 0.3s;
+}
+.save-toast.show { opacity: 1; }
+</style>
+</head>
+<body>
+
+<!-- ═══ LOGIN ═══ -->
+<div id="login-screen">
+  <div class="login-box">
+    <p class="login-logo">Beauté Mell</p>
+    <p class="login-sub">Espace Administration</p>
+    <input type="password" id="pwd" placeholder="Mot de passe" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="login-btn" onclick="doLogin()">Accéder</button>
+    <p class="login-error" id="loginError"></p>
+    <p class="login-back"><a href="index.html">← Retour au site</a></p>
+  </div>
+</div>
+
+<!-- ═══ ADMIN PANEL ═══ -->
+<div id="admin-panel">
+  <div class="admin-header">
+    <span class="admin-logo">Beauté Mell · Admin</span>
+    <nav class="admin-nav">
+      <button class="active" onclick="showTab('agenda',this)">📅 Agenda</button>
+      <button onclick="showTab('photos',this)">🖼 Photos</button>
+      <button onclick="showTab('reseaux',this)">📱 Réseaux</button>
+      <button onclick="showTab('params',this)">⚙️ Paramètres</button>
+    </nav>
+    <button class="logout-btn" onclick="logout()">Déconnexion</button>
+  </div>
+
+  <div class="admin-content">
+
+    <!-- TAB: AGENDA -->
+    <div class="tab-content active" id="tab-agenda">
+      <h2 class="section-title">Agenda & Réservations</h2>
+      <p class="section-sub">Gérez vos rendez-vous et créneaux bloqués.</p>
+
+      <div class="agenda-toolbar">
+        <div class="toolbar-mode">
+          <label>Mode global</label>
+          <div class="toggle on" id="adminModeToggle" onclick="toggleAdminMode()">
+            <div class="toggle-knob"></div>
+          </div>
+          <span class="mode-badge-label" id="adminModeLabel">AUTO</span>
+        </div>
+        <select class="filter-select" id="statusFilter" onchange="renderReservations()">
+          <option value="all">Tous les statuts</option>
+          <option value="pending">En attente</option>
+          <option value="confirmed">Confirmés</option>
+          <option value="refused">Refusés</option>
+        </select>
+        <select class="filter-select" id="dateFilter" onchange="renderReservations()">
+          <option value="all">Toutes les dates</option>
+          <option value="upcoming">À venir</option>
+          <option value="past">Passés</option>
+        </select>
+        <button class="btn-block" style="background:var(--red);margin-left:auto;" onclick="clearAllReservations()">Vider tout</button>
+      </div>
+
+      <!-- Block slots -->
+      <div class="block-section">
+        <h4>Bloquer un créneau</h4>
+        <div class="block-row">
+          <input type="date" id="blockDate">
+          <input type="time" id="blockTime" min="09:00" max="16:30" step="1800">
+          <button class="btn-block" onclick="blockSlot()">Bloquer ce créneau</button>
+          <button class="btn-block" onclick="blockFullDay()" style="background:var(--brown)">Bloquer la journée entière</button>
+        </div>
+        <div id="blockedList" style="margin-top:12px;display:flex;flex-wrap:wrap;gap:8px;"></div>
+      </div>
+
+      <!-- Reservations -->
+      <div class="reservations-list" id="reservationsList"></div>
+    </div>
+
+    <!-- TAB: PHOTOS -->
+    <div class="tab-content" id="tab-photos">
+      <h2 class="section-title">Gestion des Photos</h2>
+      <p class="section-sub">Glissez-déposez ou cliquez pour charger vos photos. Elles sont sauvegardées localement.</p>
+      <div class="photos-grid" id="photosGrid"></div>
+    </div>
+
+    <!-- TAB: RÉSEAUX -->
+    <div class="tab-content" id="tab-reseaux">
+      <h2 class="section-title">Réseaux Sociaux</h2>
+      <p class="section-sub">Connectez votre compte Instagram pour afficher vos dernières publications.</p>
+      <div class="reseaux-container">
+        <div>
+          <div class="token-box" style="margin-bottom:24px;">
+            <h4>Access Token Instagram</h4>
+            <div class="token-input-row">
+              <input type="text" id="igToken" placeholder="Collez votre token ici..." value="">
+              <button class="btn-fetch" onclick="fetchInstagram()">Charger</button>
+            </div>
+          </div>
+          <div class="token-box">
+            <h4>Comment obtenir votre token</h4>
+            <div class="token-guide">
+              <div class="guide-step">
+                <span class="guide-num">1</span>
+                <p class="guide-text">Rendez-vous sur <strong>developers.facebook.com</strong> → Mon appli → Créer une appli → Choisir "Entreprise"</p>
+              </div>
+              <div class="guide-step">
+                <span class="guide-num">2</span>
+                <p class="guide-text">Dans l'appli, ajoutez le produit <strong>Instagram Basic Display</strong>. Allez dans "Génération de token" et connectez votre compte Instagram.</p>
+              </div>
+              <div class="guide-step">
+                <span class="guide-num">3</span>
+                <p class="guide-text">Copiez le token généré (valide 60 jours) et collez-le ci-dessus. Pour un token permanent, utilisez l'API Graph avec une page Facebook liée.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div id="igResults">
+            <p class="ig-placeholder">🌸 Entrez votre token Instagram et cliquez "Charger" pour afficher vos publications.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: PARAMÈTRES -->
+    <div class="tab-content" id="tab-params">
+      <h2 class="section-title">Paramètres du salon</h2>
+      <p class="section-sub">Informations générales et horaires d'ouverture.</p>
+      <div class="params-grid">
+        <div class="param-section">
+          <h4>Informations du salon</h4>
+          <div class="param-group">
+            <label>Nom du salon</label>
+            <input type="text" id="pNom" value="Beauté Mell">
+          </div>
+          <div class="param-group">
+            <label>Adresse</label>
+            <input type="text" id="pAdresse" value="Saint-Georges, Liège, Belgique">
+          </div>
+          <div class="param-group">
+            <label>Téléphone</label>
+            <input type="text" id="pTel" value="">
+          </div>
+          <div class="param-group">
+            <label>Email</label>
+            <input type="text" id="pEmail" value="">
+          </div>
+          <div class="param-group">
+            <label>Instagram</label>
+            <input type="text" id="pInsta" placeholder="@beautemell">
+          </div>
+          <div class="param-group">
+            <label>À propos (courte bio)</label>
+            <textarea id="pBio">Ongliste passionnée à Saint-Georges, Liège. Gel · Résine · VSP · Nail Art</textarea>
+          </div>
+          <button class="btn-save" onclick="saveParams()">Sauvegarder</button>
+          <span class="save-toast" id="paramToast">✓ Sauvegardé !</span>
+        </div>
+        <div class="param-section">
+          <h4>Horaires d'ouverture</h4>
+          <div class="horaires-grid" id="horairesGrid"></div>
+          <button class="btn-save" onclick="saveHoraires()">Sauvegarder les horaires</button>
+          <span class="save-toast" id="horaireToast">✓ Sauvegardé !</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const PASS = 'beautemell2025';
+
+function doLogin() {
+  const val = document.getElementById('pwd').value;
+  if (val === PASS) {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('admin-panel').style.display = 'block';
+    initAdmin();
+  } else {
+    document.getElementById('loginError').textContent = 'Mot de passe incorrect.';
+  }
+}
+
+function logout() {
+  document.getElementById('admin-panel').style.display = 'none';
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('pwd').value = '';
+  document.getElementById('loginError').textContent = '';
+}
+
+function showTab(tab, btn) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.admin-nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  btn.classList.add('active');
+}
+
+/* ═══ INIT ADMIN ═══ */
+function initAdmin() {
+  initAdminMode();
+  renderReservations();
+  renderBlockedList();
+  initPhotos();
+  initHoraires();
+  loadParams();
+  const saved = localStorage.getItem('ig_token');
+  if (saved) document.getElementById('igToken').value = saved;
+}
+
+/* ═══ AGENDA ═══ */
+let adminMode = localStorage.getItem('bm_booking_mode') || 'auto';
+
+function initAdminMode() {
+  const toggle = document.getElementById('adminModeToggle');
+  const label = document.getElementById('adminModeLabel');
+  if (adminMode === 'manual') {
+    toggle.classList.remove('on');
+    label.textContent = 'MANUEL';
+  } else {
+    toggle.classList.add('on');
+    label.textContent = 'AUTO';
+  }
+}
+
+function toggleAdminMode() {
+  const toggle = document.getElementById('adminModeToggle');
+  const label = document.getElementById('adminModeLabel');
+  adminMode = adminMode === 'auto' ? 'manual' : 'auto';
+  localStorage.setItem('bm_booking_mode', adminMode);
+  toggle.classList.toggle('on', adminMode === 'auto');
+  label.textContent = adminMode === 'auto' ? 'AUTO' : 'MANUEL';
+}
+
+function formatDateFR(str) {
+  if (!str) return '';
+  const [y,m,d] = str.split('-');
+  const months = ['janv.','févr.','mars','avr.','mai','juin','juil.','août','sept.','oct.','nov.','déc.'];
+  return d + ' ' + months[parseInt(m)-1] + ' ' + y;
+}
+
+function renderReservations() {
+  const list = document.getElementById('reservationsList');
+  let reservations = JSON.parse(localStorage.getItem('bm_reservations') || '[]');
+  const statusFilter = document.getElementById('statusFilter').value;
+  const dateFilter = document.getElementById('dateFilter').value;
+  const today = new Date().toISOString().split('T')[0];
+
+  if (statusFilter !== 'all') reservations = reservations.filter(r => r.status === statusFilter);
+  if (dateFilter === 'upcoming') reservations = reservations.filter(r => r.date >= today);
+  if (dateFilter === 'past') reservations = reservations.filter(r => r.date < today);
+  reservations.sort((a,b) => a.date.localeCompare(b.date) || a.time.localeCompare(b.time));
+
+  if (reservations.length === 0) {
+    list.innerHTML = '<div class="empty-state">🌸 Aucune réservation trouvée.</div>';
+    return;
+  }
+
+  list.innerHTML = reservations.map(r => `
+    <div class="resa-card" id="resa-${r.id}">
+      <div class="resa-status ${r.status}"></div>
+      <div class="resa-info">
+        <p class="resa-name">${r.prenom} ${r.nom} <span style="font-size:0.72rem;color:var(--muted);margin-left:8px;">${r.tel} · ${r.email}</span></p>
+        <p class="resa-details">${formatDateFR(r.date)} à ${r.time} · ${r.status === 'confirmed' ? '✓ Confirmé' : r.status === 'pending' ? '⏳ En attente' : '✗ Refusé'}${r.message ? ' · <em>' + r.message + '</em>' : ''}</p>
+      </div>
+      <span class="resa-service">${r.service}</span>
+      <div class="resa-actions">
+        ${r.status !== 'confirmed' ? `<button class="btn-confirm" onclick="setStatus(${r.id},'confirmed')">✓ Confirmer</button>` : ''}
+        ${r.status !== 'refused' ? `<button class="btn-refuse" onclick="setStatus(${r.id},'refused')">✗ Refuser</button>` : ''}
+        <button class="btn-del" onclick="deleteResa(${r.id})">🗑</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function setStatus(id, status) {
+  let reservations = JSON.parse(localStorage.getItem('bm_reservations') || '[]');
+  const r = reservations.find(r => r.id === id);
+  if (r) { r.status = status; localStorage.setItem('bm_reservations', JSON.stringify(reservations)); }
+  renderReservations();
+}
+
+function deleteResa(id) {
+  let reservations = JSON.parse(localStorage.getItem('bm_reservations') || '[]');
+  reservations = reservations.filter(r => r.id !== id);
+  localStorage.setItem('bm_reservations', JSON.stringify(reservations));
+  renderReservations();
+}
+
+function clearAllReservations() {
+  if (confirm('Supprimer TOUTES les réservations ?')) {
+    localStorage.removeItem('bm_reservations');
+    renderReservations();
+  }
+}
+
+function blockSlot() {
+  const date = document.getElementById('blockDate').value;
+  const time = document.getElementById('blockTime').value;
+  if (!date || !time) { alert('Choisissez une date et une heure.'); return; }
+  const blocked = JSON.parse(localStorage.getItem('bm_blocked') || '{}');
+  if (!blocked[date]) blocked[date] = [];
+  if (!blocked[date].includes(time)) blocked[date].push(time);
+  localStorage.setItem('bm_blocked', JSON.stringify(blocked));
+  renderBlockedList();
+}
+
+function blockFullDay() {
+  const date = document.getElementById('blockDate').value;
+  if (!date) { alert('Choisissez une date.'); return; }
+  const blocked = JSON.parse(localStorage.getItem('bm_blocked') || '{}');
+  blocked[date] = [];
+  for (let h = 9; h < 17; h++) {
+    for (let m = 0; m < 60; m += 30) {
+      blocked[date].push(String(h).padStart(2,'0') + ':' + String(m).padStart(2,'0'));
+    }
+  }
+  localStorage.setItem('bm_blocked', JSON.stringify(blocked));
+  renderBlockedList();
+}
+
+function renderBlockedList() {
+  const blocked = JSON.parse(localStorage.getItem('bm_blocked') || '{}');
+  const list = document.getElementById('blockedList');
+  const items = [];
+  Object.entries(blocked).forEach(([date, times]) => {
+    times.forEach(time => {
+      items.push(`<span style="background:rgba(224,88,88,0.1);color:var(--red);padding:4px 12px;border-radius:20px;font-size:0.75rem;display:flex;align-items:center;gap:8px;">
+        ${formatDateFR(date)} ${time}
+        <button onclick="unblockSlot('${date}','${time}')" style="background:none;border:none;cursor:pointer;color:var(--red);font-size:0.9rem;padding:0;">×</button>
+      </span>`);
+    });
+  });
+  list.innerHTML = items.length ? items.join('') : '<span style="font-size:0.78rem;color:var(--muted);">Aucun créneau bloqué.</span>';
+}
+
+function unblockSlot(date, time) {
+  const blocked = JSON.parse(localStorage.getItem('bm_blocked') || '{}');
+  if (blocked[date]) {
+    blocked[date] = blocked[date].filter(t => t !== time);
+    if (!blocked[date].length) delete blocked[date];
+  }
+  localStorage.setItem('bm_blocked', JSON.stringify(blocked));
+  renderBlockedList();
+}
+
+/* ═══ PHOTOS ═══ */
+const PHOTO_KEYS = ['photo-mell','photo-1','photo-2','photo-3','photo-4','photo-5','photo-6','photo-7','photo-8'];
+const PHOTO_LABELS = ['Photo Mell (principale)','Portfolio 1','Portfolio 2','Portfolio 3','Portfolio 4','Portfolio 5','Portfolio 6','Portfolio 7','Portfolio 8'];
+
+function initPhotos() {
+  const grid = document.getElementById('photosGrid');
+  grid.innerHTML = '';
+  PHOTO_KEYS.forEach((key, i) => {
+    const saved = localStorage.getItem('bm_photo_' + key);
+    const zone = document.createElement('div');
+    zone.className = 'drop-zone';
+    zone.dataset.key = key;
+
+    if (saved) {
+      const img = document.createElement('img');
+      img.src = saved;
+      zone.appendChild(img);
+      const rm = document.createElement('button');
+      rm.className = 'remove-photo';
+      rm.innerHTML = '×';
+      rm.onclick = (e) => { e.stopPropagation(); removePhoto(key, zone); };
+      zone.appendChild(rm);
+    } else {
+      zone.innerHTML = `
+        <span class="drop-zone-icon">📷</span>
+        <span class="drop-zone-label">Glisser ou cliquer</span>
+        <span class="drop-zone-name">${key}.jpg</span>
+        <input type="file" accept="image/*" onchange="loadPhoto(event,'${key}',this.closest('.drop-zone'))">
+      `;
+    }
+
+    zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
+    zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+    zone.addEventListener('drop', e => {
+      e.preventDefault();
+      zone.classList.remove('drag-over');
+      const file = e.dataTransfer.files[0];
+      if (file && file.type.startsWith('image/')) readPhoto(file, key, zone);
+    });
+
+    grid.appendChild(zone);
+  });
+}
+
+function loadPhoto(event, key, zone) {
+  const file = event.target.files[0];
+  if (file) readPhoto(file, key, zone);
+}
+
+function readPhoto(file, key, zone) {
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    localStorage.setItem('bm_photo_' + key, e.target.result);
+    zone.innerHTML = '';
+    const img = document.createElement('img');
+    img.src = e.target.result;
+    zone.appendChild(img);
+    const rm = document.createElement('button');
+    rm.className = 'remove-photo';
+    rm.innerHTML = '×';
+    rm.onclick = (ev) => { ev.stopPropagation(); removePhoto(key, zone); };
+    zone.appendChild(rm);
+  };
+  reader.readAsDataURL(file);
+}
+
+function removePhoto(key, zone) {
+  localStorage.removeItem('bm_photo_' + key);
+  const i = PHOTO_KEYS.indexOf(key);
+  zone.innerHTML = `
+    <span class="drop-zone-icon">📷</span>
+    <span class="drop-zone-label">Glisser ou cliquer</span>
+    <span class="drop-zone-name">${key}.jpg</span>
+    <input type="file" accept="image/*" onchange="loadPhoto(event,'${key}',this.closest('.drop-zone'))">
+  `;
+}
+
+/* ═══ INSTAGRAM ═══ */
+function fetchInstagram() {
+  const token = document.getElementById('igToken').value.trim();
+  if (!token) { alert('Collez votre Access Token Instagram.'); return; }
+  localStorage.setItem('ig_token', token);
+  document.getElementById('igResults').innerHTML = '<p class="ig-placeholder">⏳ Chargement...</p>';
+
+  // Fetch user info
+  fetch(`https://graph.instagram.com/me?fields=id,username,media_count,followers_count&access_token=${token}`)
+    .then(r => r.json())
+    .then(user => {
+      // Fetch media
+      return fetch(`https://graph.instagram.com/me/media?fields=id,media_url,media_type,permalink,like_count&limit=12&access_token=${token}`)
+        .then(r => r.json())
+        .then(media => renderInstagram(user, media));
+    })
+    .catch(err => {
+      document.getElementById('igResults').innerHTML = `<p class="ig-placeholder" style="color:var(--red);">❌ Erreur de chargement. Vérifiez votre token. (${err.message})</p>`;
+    });
+}
+
+function renderInstagram(user, media) {
+  const items = media.data || [];
+  let html = `
+    <div class="ig-stats">
+      <div class="ig-stat"><span class="ig-stat-num">@${user.username || '—'}</span><span class="ig-stat-label">Compte</span></div>
+      <div class="ig-stat"><span class="ig-stat-num">${user.followers_count || '—'}</span><span class="ig-stat-label">Abonnés</span></div>
+      <div class="ig-stat"><span class="ig-stat-num">${user.media_count || items.length}</span><span class="ig-stat-label">Publications</span></div>
+    </div>
+    <div class="instagram-grid">
+  `;
+  items.slice(0, 12).forEach(m => {
+    if (m.media_type === 'IMAGE' || m.media_type === 'CAROUSEL_ALBUM') {
+      html += `<div class="ig-photo"><a href="${m.permalink}" target="_blank"><img src="${m.media_url}" alt="Instagram" loading="lazy"></a></div>`;
+    }
+  });
+  html += '</div>';
+  document.getElementById('igResults').innerHTML = html;
+}
+
+/* ═══ HORAIRES ═══ */
+const DAYS = ['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'];
+const DEFAULT_HOURS = {
+  'Lundi': {open:'09:00',close:'18:00',closed:false},
+  'Mardi': {open:'09:00',close:'18:00',closed:false},
+  'Mercredi': {open:'09:00',close:'18:00',closed:false},
+  'Jeudi': {open:'09:00',close:'18:00',closed:false},
+  'Vendredi': {open:'09:00',close:'18:00',closed:false},
+  'Samedi': {open:'10:00',close:'17:00',closed:false},
+  'Dimanche': {open:'',close:'',closed:true},
+};
+
+function initHoraires() {
+  const saved = JSON.parse(localStorage.getItem('bm_horaires') || 'null') || DEFAULT_HOURS;
+  const grid = document.getElementById('horairesGrid');
+  grid.innerHTML = '';
+  DAYS.forEach(day => {
+    const h = saved[day] || DEFAULT_HOURS[day];
+    const row = document.createElement('div');
+    row.className = 'horaire-row';
+    row.innerHTML = `
+      <span class="horaire-day">${day}</span>
+      <div class="horaire-inputs">
+        <input type="time" id="h_open_${day}" value="${h.open}" ${h.closed?'disabled':''}>
+        <span style="color:var(--muted);font-size:0.8rem;">→</span>
+        <input type="time" id="h_close_${day}" value="${h.close}" ${h.closed?'disabled':''}>
+        <input type="checkbox" id="h_closed_${day}" ${h.closed?'checked':''}
+          onchange="document.getElementById('h_open_${day}').disabled=this.checked;document.getElementById('h_close_${day}').disabled=this.checked;">
+        <span class="horaire-closed">Fermé</span>
+      </div>
+    `;
+    grid.appendChild(row);
+  });
+}
+
+function saveHoraires() {
+  const horaires = {};
+  DAYS.forEach(day => {
+    horaires[day] = {
+      open: document.getElementById('h_open_' + day).value,
+      close: document.getElementById('h_close_' + day).value,
+      closed: document.getElementById('h_closed_' + day).checked,
+    };
+  });
+  localStorage.setItem('bm_horaires', JSON.stringify(horaires));
+  const toast = document.getElementById('horaireToast');
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2000);
+}
+
+/* ═══ PARAMS ═══ */
+function loadParams() {
+  const p = JSON.parse(localStorage.getItem('bm_params') || 'null');
+  if (!p) return;
+  if (p.nom) document.getElementById('pNom').value = p.nom;
+  if (p.adresse) document.getElementById('pAdresse').value = p.adresse;
+  if (p.tel) document.getElementById('pTel').value = p.tel;
+  if (p.email) document.getElementById('pEmail').value = p.email;
+  if (p.insta) document.getElementById('pInsta').value = p.insta;
+  if (p.bio) document.getElementById('pBio').value = p.bio;
+}
+
+function saveParams() {
+  const p = {
+    nom: document.getElementById('pNom').value,
+    adresse: document.getElementById('pAdresse').value,
+    tel: document.getElementById('pTel').value,
+    email: document.getElementById('pEmail').value,
+    insta: document.getElementById('pInsta').value,
+    bio: document.getElementById('pBio').value,
+  };
+  localStorage.setItem('bm_params', JSON.stringify(p));
+  const toast = document.getElementById('paramToast');
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2000);
+}
+</script>
+</body>
+</html>
